@@ -24,4 +24,3 @@ ClearScreen:
     INT 0x10
     RET
 
-NewLine db 0x0D
