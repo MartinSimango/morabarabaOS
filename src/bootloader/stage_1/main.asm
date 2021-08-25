@@ -2,7 +2,7 @@
 [ORG 0x7c00]
 
 ; TODO find out why this doesn't effect size of program
-PROGRAM_SPACE equ 0x7e00; 512 bytes after first sector
+PROGRAM_SPACE equ 0x8000; 512 bytes after first sector
 
 section .text
     global main

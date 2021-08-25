@@ -1,9 +1,9 @@
 [BITS 16]
 
 section .text
-    global main
+    global _main
 
-main:
+_main:
     JMP EnterProtectiveMode
 
 %include "src/bootloader/stage_2/idt.asm"
@@ -12,19 +12,30 @@ main:
 
 EnterProtectiveMode:
     CALL PrintProtectiveModeMessage
-    
-    CALL EnableA20
     CALL ClearScreen
-
     cli
+
+    CALL EnableA20
+    CALL SetVideoMode
+
+    
     lgdt [gdt] ; load gdt
     lidt [idt] ; load idt
 
     CALL EnablePE
     
-    JMP codeseg:StartProctectiveMode
+    
+    JMP codeseg:StartProctectiveMode; far jmp  new cs must be offset of code segment in GDT .ie codeseg is the offset of the code segment in the GDT
+                                     ; i.e codeseg is codeseg bytes away from the start of the GDT and codeseg bytes away from the GDT is
+                                     ; the beginning of the codeseg in the GDT
     
 
+;switch from text mode to video mode 320x200 px 8 bit graphics
+SetVideoMode:
+    mov ah, 0x00
+    mov al, 0x13
+    int 0x10
+    RET
 ; todo make this better as this is the A20 fast method. Check to set if A20 is set
 EnableA20:
     IN al, 0x92
@@ -59,19 +70,18 @@ Reboot:
 
 
 [BITS 32] ; switch to 32 bit mode
-[extern _start]
+[extern main]
 StartProctectiveMode:
 
-    mov    ax, dataseg     ; Byte offset for selector 2 (start of data seg)
+    mov    ax, dataseg   ; Byte offset for selector 2 (start of data seg)
     mov    ds, ax        ; (remember, each descriptor is 8 bytes)
     mov    es, ax
     mov    fs, ax
     mov    gs, ax
     mov    ss, ax
 
-    mov    esp, 0x2ffff  ; Set stack to grow downwards from 0x30000
-
-    call _start ; go to the start of the kernel code
+    mov    esp, 0x2ffff  ; Set stack to grow downwards from 0x30000 - so you have 0x30000 until 0x7e00  (max of this should be 0x9fc00)
+    call   main ; go to the start of the kernel code
 
 
 
@@ -81,7 +91,6 @@ KernelMessage db "Now Loading the Kernel...", 0x0d,0xA,0
 ProtectiveModeMessage db "Entering protective mode...", 0x0d,0xA,0
 LoadGDT db "Loading GDT", 0x0d, 0
 GDTLoader db "GDT finished loading", 0x0d, 0
-
 
 
 

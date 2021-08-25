@@ -1,3 +1,4 @@
+[BITS 16]
 gdt_nulldesc:
     dd 0 ; 4 bytes
     dd 0;  4 bytes

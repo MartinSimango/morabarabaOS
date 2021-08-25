@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "screen.h": "c",
+        "util.h": "c",
+        "colours.h": "c"
+    }
+}

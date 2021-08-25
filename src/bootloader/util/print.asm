@@ -1,3 +1,5 @@
+[BITS 16]
+
 PrintString:
 next_character:
     MOV AL, [SI] ; get a byte from SI register

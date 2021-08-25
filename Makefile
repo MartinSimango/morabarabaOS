@@ -12,14 +12,18 @@ build-bootloader:
 	
 
 build-kernel:
-	i686-unknown-linux-gnu-gcc -o $(OBJ)/kernel.o -c $(KERNEL)/kernel.c
-	i686-unknown-linux-gnu-ld -o $(BIN)/kernel.bin -Ttext=0x7e00 -e main $(OBJ)/loadkernel.o $(OBJ)/kernel.o
-	i686-unknown-linux-gnu-objcopy -O binary $(BIN)/kernel.bin $(BIN)/kernel.bin 
+	i686-unknown-linux-gnu-gcc -ffreestanding -mno-red-zone -o $(OBJ)/main.o -c $(KERNEL)/main.c
+	i686-unknown-linux-gnu-gcc -ffreestanding -mno-red-zone -o $(OBJ)/screen.o -c $(KERNEL)/screen.c
+	i686-unknown-linux-gnu-gcc -ffreestanding -mno-red-zone -o $(OBJ)/util.o -c $(KERNEL)/util.c
+	i686-unknown-linux-gnu-gcc -ffreestanding -mno-red-zone -o $(OBJ)/colours.o -c $(KERNEL)/colours.c
+
+	i686-unknown-linux-gnu-ld -T"src/kernel/link.ld"
+	# i686-unknown-linux-gnu-objcopy -O binary $(BIN)/kernel.bin $(BIN)/kernel.bin 
 
 build: build-bootloader build-kernel
 
 iso:
-	dd if=/dev/zero of=$(IMAGE) bs=512 count=20 #make disk 1 mb in size
+	dd if=/dev/zero of=$(IMAGE) bs=512 count=40 #make disk 1 mb in size
 	dd if=$(BIN)/boot.bin of=$(IMAGE) conv=notrunc bs=512 seek=0 count=1 
 	dd if=$(BIN)/kernel.bin of=$(IMAGE) conv=notrunc bs=512 seek=1 count=2 
 
