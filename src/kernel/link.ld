@@ -1,9 +1,9 @@
 OUTPUT_FORMAT("binary")
-ENTRY(_main)
+ENTRY(_start)
 
 
 
-INPUT(
+/* INPUT(
     obj/loadkernel.o
     obj/main.o
     obj/screen.o
@@ -14,11 +14,11 @@ INPUT(
 
 OUTPUT(
     bin/kernel.bin
-)
+) */
 SECTIONS
 {
 
-    . = 0x8000;
+    . = 1M;
 
     .text : ALIGN(0x1000)
     {
@@ -41,6 +41,10 @@ SECTIONS
         *(COMMON)
         *(.bss)
         
+    }
+
+    .asm : ALIGN(0x1000){
+        *(.asm)
     }
 
     end = .;

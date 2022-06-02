@@ -2,6 +2,8 @@
     "files.associations": {
         "screen.h": "c",
         "util.h": "c",
-        "colours.h": "c"
+        "colours.h": "c",
+        "tty.h": "c",
+        "string.h": "c"
     }
 }

@@ -1,4 +1,7 @@
 #include "screen.h"
+#include "tty.h"
+#include "idt.h"
+
 // // fixed width integer types
 // typedef unsigned char u8;
 // typedef unsigned short u16;
@@ -73,6 +76,11 @@
 // unsigned short *VGA_MEMORY = (unsigned short*) 0x0A0000;
 
 void main() {
-    init_screen();
-    for(;;) {}
- }
+    idt_init();
+    terminal tty;
+    tty_initialize(&tty);
+    tty_set_text_color(&tty, TTY_GREEN);
+    tty_print(&tty, "Hello World! What is going on today?\nHi");
+    
+    
+}
