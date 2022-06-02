@@ -8,8 +8,9 @@ Currently instate:
 
 Goals
 1. Create Custom bootloader - done
-2. Written for 32/64 bit system 
-3. Sound Driver
-4. Graphics Driver
-5. Keyboard Driver
-6. Mouse Driver
+2. Written for 32/64 bit system  (currently a 32-bit OS)
+3. Implement IDT and ISR's 
+4. Sound Driver
+5. Graphics Driver
+6. Keyboard Driver
+7. Mouse Driver
