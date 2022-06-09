@@ -4,6 +4,7 @@
         "util.h": "c",
         "colours.h": "c",
         "tty.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "types.h": "c"
     }
 }

@@ -59,6 +59,7 @@ reset_drive:
   int  0x13               ; call interrupt 13h
   jc   boot_failure        ; display error message if carry set (error)
   call read_disk
+  
   jmp PROGRAM_SPACE     ; jmp to 2nd stage bootloader that will load the kernel
 
 

@@ -31,7 +31,7 @@ EnterProtectiveMode:
 ;switch from text mode to video mode 320x200 px 8 bit graphics
 SetVideoMode:
     mov ah, 0x00
-    mov al, 0x13
+    mov al, 0x13 
     int 0x10
     RET
 ; todo make this better as this is the A20 fast method. Check to set if A20 is set

@@ -1,6 +1,10 @@
-#include "screen.h"
+// #include "screen.h"
 #include "tty.h"
 #include "idt.h"
+// #include "font.h"
+#include "io.h"
+#include "irq.h"
+#include "kheap.h"
 
 // // fixed width integer types
 // typedef unsigned char u8;
@@ -75,12 +79,52 @@
 // }
 // unsigned short *VGA_MEMORY = (unsigned short*) 0x0A0000;
 
-void main() {
+// void enable_cursor(uint8 cursor_start, uint8 cursor_end)
+// {
+// 	outb(0x3D4, 0x0A);
+// 	outb(0x3D5, (inb(0x3D5) & 0xC0) | cursor_start);
+ 
+// 	outb(0x3D4, 0x0B);
+// 	outb(0x3D5, (inb(0x3D5) & 0xE0) | cursor_end);
+// }
+void start_kernel() {
+    char s;
+    char b[125];
+    tty_init();
+    kheap_init();
     idt_init();
-    terminal tty;
-    tty_initialize(&tty);
-    tty_set_text_color(&tty, TTY_GREEN);
-    tty_print(&tty, "Hello World! What is going on today?\nHi");
-    
-    
+    irq_init();
+    enable_interrupts();
+
+
+    uint8 * ptr = kmalloc(5);
+    ptr[0]=1;
+      ptr[1]=1;
+    ptr[2]=1;
+    ptr[3]=1;
+    ptr[4]=1;
+    ptr[4095]=6;
+
+    uint8 * ptr_2 = kmalloc(5000); 
+    ptr_2[0]= 10;
+    // void * ptr_2 = kmalloc(5000);
+
+    tty_print_default(itoa((uint32)(ptr[4095]),b,10));
+   tty_print_default("\n");
+    kfree(ptr);
+    ptr =NULL;
+    kfree(ptr);
+
+
+    tty_print_default(itoa((uint32)(ptr[4095]),b,10));
+
+  
+
+   
+    // terminal tty;
+    // tty_initialize(&tty);
+    // // enable_cursor(1,10);
+    // tty_set_text_color(&tty, TTY_GREEN);
+    // tty_print(&tty, "Hello World! What is going on today x X?\nHi");
+    // init_screen();
 }
