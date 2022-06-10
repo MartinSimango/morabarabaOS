@@ -37,7 +37,7 @@ INCLUDE_DIRS:=$(patsubst %, -I %, $(MODULES))
 
 C_OBJECT_FILES:=$(patsubst %.c, $(OBJ)/%.o, $(SOURCE_FILES_IN_MODULES))
 
-ASM_OBJECT_FILES:=$(OBJ)/kernel.asm.o $(OBJ)/idt.asm.o $(OBJ)/io.asm.o
+ASM_OBJECT_FILES:=$(OBJ)/kernel.asm.o $(OBJ)/idt.asm.o $(OBJ)/io.asm.o 
 
 ALL_OBJECT_FILES:=$(ASM_OBJECT_FILES) $(C_OBJECT_FILES) $(OBJ)/kernel.o 
 
@@ -58,6 +58,8 @@ build-kernel: $(MODULES_OBJECT_DIR) $(C_OBJECT_FILES)
 	nasm $(KERNEL)/kernel.asm -g -f elf -o $(OBJ)/kernel.asm.o 
 	nasm $(KERNEL)/idt/idt.asm -g -f elf -o $(OBJ)/idt.asm.o
 	nasm $(KERNEL)/io/io.asm -g -f elf -o $(OBJ)/io.asm.o
+	# nasm $(KERNEL)/grahpics/vbe.asm -g -f elf -o $(OBJ)/vbe.asm.o
+
 
 	$(GCC) $(FLAGS) -o $(OBJ)/kernel.o -c $(KERNEL)/kernel.c $(INCLUDE_DIRS)
 
@@ -77,7 +79,7 @@ iso:
 run:
 	qemu-system-i386 -hda $(IMAGE)  # -d cpu_reset -monitor stdio -device sb16 -audiodev coreaudio,id=coreaudio,out.frequency=48000,out.channels=2,out.format=s32
 
-all: clean format build run
+all: clean  build run
 
 clean:
 	rm -rf bin/*

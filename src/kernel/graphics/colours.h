@@ -4,24 +4,23 @@
 #include "types.h"
 
 typedef struct RGB {
-  uint8 red;
-  uint8 green;
   uint8 blue;
-} RGB;
+  uint8 green;
+  uint8 red;
+} __attribute__((packed)) RGB;
 
-static const RGB WHITE = (RGB){63, 63, 63};
+static const RGB WHITE = (RGB){0xff, 0xff, 0xff};
 static const RGB BLACK = (RGB){0, 0, 0};
-static const RGB RED = (RGB){63, 0, 0};
-static const RGB GREEN = (RGB){0, 63, 0};
-static const RGB BLUE = (RGB){0, 0, 63};
-static const RGB YELLOW = (RGB){63, 63, 0};
+static const RGB RED = (RGB){0, 0, 0xff};
+static const RGB GREEN = (RGB){0, 0xff, 0};
+static const RGB BLUE = (RGB){0xff, 0, 0};
+static const RGB YELLOW = (RGB){0, 0xff, 0xff};
 static const RGB PURPLE = (RGB){30, 0, 30};
-static const RGB PINK = (RGB){63, 105, 180};
+static const RGB SKY_BLUE = (RGB){180, 105, 63};
 static const RGB LIGHT_BLUE = (RGB){0, 63, 63};
 
-// static RGB SCREEN_PALETTE[1] = {
-//     GREEN
-// };
+static const RGB TERMINAL_GRAY = (RGB){30, 30, 30};
+
 void init_colours();
 
 #endif

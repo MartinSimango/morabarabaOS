@@ -1,58 +1,63 @@
 #include "screen.h"
 #include "io.h"
+#include "types.h"
 
-void init_pallete(RGB *pallete, uint8 pallette_size) {
-  // CLI();
-  // outb(PALETTE_DATA_REGISTER, 0xFF);
-  // // // STI();
-  // struct RGB colour;
-  // // pallete_set(0, colour = WHITE);
-  // for (uint8 i = 0; i < pallette_size; i++) {
-  //     // pallete_set(i, pallete[i]);
-  // }
-  // pallete_set(0, colour = BLACK);
-}
+uint16 screen_row;
+uint16 screen_col;
 
-void init_default_pallete() {
-  // CLI();
-  outb(PALETTE_DATA_REGISTER, 0xFF);
-  // STI();
-  struct RGB colour;
-  pallete_set(0, colour = BLACK);
-  for (uint8 i = 1; i < 255; i++) {
-    colour.red = (((i >> 5) & 0x7) * (256 / 8)) / 4;
-    colour.green = (((i >> 2) & 0x7) * (256 / 8)) / 4;
-    colour.blue = (((i >> 0) & 0x3) * (256 / 4)) / 4;
-    pallete_set(i, colour);
-  }
-  pallete_set(255, colour = WHITE);
-}
+void init_screen(RGB color) {
 
-void pallete_set(uint8 index, struct RGB colour) {
-  //  CLI();
-  outb(PALETTE_WRITE_REGISTER, index);
-  outb(PALETTE_DATA_REGISTER, colour.red);
-  outb(PALETTE_DATA_REGISTER, colour.green);
-  outb(PALETTE_DATA_REGISTER, colour.blue);
-  //   STI();
-}
+  RGB *VGA_MEMORY = (RGB *)VBE_MODE_INFO->PhysBasePtr;
 
-void init_screen() {
-
-  init_default_pallete();
-
-  uint8 *VGA_MEMORY = (uint8 *)0x0A0000;
-
-  for (int width = 0; width < SCREEN_WIDTH; width++) {
-    for (int height = 0; height < SCREEN_HEIGHT; height++) {
-      // uint16 offset = (height<<8) + (height<<6) + width;
-      uint16 offset = width + height * SCREEN_WIDTH;
-      VGA_MEMORY[offset] = height + 1;
+  for (uint32 width = 0; width < SCREEN_WIDTH; width++) {
+    for (uint32 height = 0; height < SCREEN_HEIGHT; height++) {
+      uint32 offset = width + height * SCREEN_WIDTH;
+      VGA_MEMORY[offset] = color;
     }
   }
 }
-void screen_set(char c, uint16 x, uint16 y) {
-  uint8 *VGA_MEMORY = (uint8 *)0x0A0000;
 
-  VGA_MEMORY[(y * SCREEN_WIDTH) + x] = c;
+void screen_draw_pixel(RGB color, uint16 x, uint16 y) {
+  RGB *VGA_MEMORY = (RGB *)VBE_MODE_INFO->PhysBasePtr;
+  VGA_MEMORY[(y * SCREEN_WIDTH) + x] = color;
+}
+
+void screen_draw_char(char c, uint8 char_width, uint16 glyph_index, size_t x,
+                      size_t y, const font *font) {
+  const uint8 *glyph = &(font->glyph_bitmap[glyph_index]);
+
+  uint8 font_color_RED = font->font_color.red;
+  uint8 font_color_GREEN = font->font_color.green;
+  uint8 font_color_BLUE = font->font_color.blue;
+
+  size_t height = (font->font_height * font->font_scale_height);
+  size_t width = (char_width * font->font_scale_width);
+
+  for (size_t yy = 0; yy < height; yy += 1) {
+    for (size_t xx = 0; xx < width; xx += 1) { // * 8 because 8 bits per pixel
+      RGB color = font->font_color;
+      uint8 pixel = glyph[(yy * char_width + xx)];
+
+      if (pixel > 0) {
+        color.red &= pixel;
+        color.blue &= pixel;
+        color.green &= pixel;
+        screen_draw_pixel(color, x + xx, y + yy);
+      }
+    }
+  }
+}
+
+void screen_print(const char *s, size_t x, size_t y, const font *font) {
+  char c;
+
+  while ((c = *s++) != 0) {
+    uint16 index = (uint8)c - font->unicode_first;
+    uint8 char_width = font->glyph_description[index].w_px;
+    uint16 glyph_index = font->glyph_description[index].glyph_index;
+
+    screen_draw_char(c, char_width, glyph_index, x, y, font);
+
+    x += char_width + 2;
+  }
 }

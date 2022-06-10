@@ -1,14 +1,14 @@
 #pragma once
 
 #include "types.h"
-
+#include "vbe.h"
 #define KERNEL_HEAP_SIZE 100 * MEGABYTE
 #define KERNEL_HEAP_BLOCK_SIZE 4096
 #define KERNEL_HEAP_TOTAL_ENTRIES                                              \
   KERNEL_HEAP_SIZE / KERNEL_HEAP_BLOCK_SIZE // 25600 entries for 4096 block size
 #define KERNEL_HEAP_ADDRESS 0x01000000
 #define KERNEL_HEAP_TABLE_ADDRESS                                              \
-  (0x00007E00 + 512) // + 512 bytes because gdt is in region of 0x00007E00 +512
+  (VBE_BLOCK_ADDRESS + VBE_BLOCK_SIZE) // start after the VBE section
 
 // ****************HEAP ENTRY STRUCTURE**********************
 // (UPPER 4 BITS ARE FLAGS)

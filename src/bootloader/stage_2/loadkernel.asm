@@ -1,11 +1,10 @@
 [BITS 16]
-[ORG 0x7e00]
-
-
+[ORG 0x7e00] ; memory free is to us if from 0x07e00 until 0x07FFFF w
 
 jmp EnterProtectiveMode
 
 %include "src/bootloader/stage_2/gdt.asm"
+%include "src/bootloader/stage_2/vbe.asm"
 
 
 EnterProtectiveMode:
@@ -16,8 +15,9 @@ EnterProtectiveMode:
     cli
 
     call EnableA20
-    ; call SetVideoMode
-
+    call SetVideoMode
+    call vbe_get_info
+ 
     
     lgdt [gdt] ; load gdt
  
@@ -28,10 +28,15 @@ EnterProtectiveMode:
                                      ; the beginning of the codeseg in the GDT (offset is 0x8)
     
 
-;switch from text mode to video mode 320x200 px 8 bit graphics
+
+
+; switch to grahpics mode 1280x1024 with 16.8M colours and use linear buffer
 SetVideoMode:
-    mov ah, 0x00
-    mov al, 0x13 
+;switch from text mode to video mode 320x200 px 8 bit graphics
+    ; mov ah, 0x00
+    ; mov al, 0x13 
+    mov AX, 4F02h
+    mov BX, VBE_MODE 
     int 0x10
     RET
 ; todo make this better as this is the A20 fast method. Check to set if A20 is set

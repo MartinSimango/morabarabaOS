@@ -1,10 +1,12 @@
-// #include "screen.h"
+#include "screen.h"
 #include "tty.h"
 #include "idt.h"
-// #include "font.h"
+#include "font.h"
 #include "io.h"
 #include "irq.h"
 #include "kheap.h"
+#include "vbe.h"
+#include "SFMonoBold.h"
 
 // // fixed width integer types
 // typedef unsigned char u8;
@@ -88,37 +90,34 @@
 // 	outb(0x3D5, (inb(0x3D5) & 0xE0) | cursor_end);
 // }
 void start_kernel() {
-    char s;
-    char b[125];
-    tty_init();
-    kheap_init();
-    idt_init();
-    irq_init();
-    enable_interrupts();
-
-
-    uint8 * ptr = kmalloc(5);
-    ptr[0]=1;
-      ptr[1]=1;
-    ptr[2]=1;
-    ptr[3]=1;
-    ptr[4]=1;
-    ptr[4095]=6;
-
-    uint8 * ptr_2 = kmalloc(5000); 
-    ptr_2[0]= 10;
-    // void * ptr_2 = kmalloc(5000);
-
-    tty_print_default(itoa((uint32)(ptr[4095]),b,10));
-   tty_print_default("\n");
-    kfree(ptr);
-    ptr =NULL;
-    kfree(ptr);
-
-
-    tty_print_default(itoa((uint32)(ptr[4095]),b,10));
-
   
+    // char s;
+    // char b[125];
+    // tty_init();
+    // kheap_init();
+    // idt_init();
+    // irq_init();
+    // enable_interrupts();
+
+
+    // // tty_print_default(itoa((uint32)(VBE_INFO_BlOCK->signature[0]),b,10));
+    // // tty_print_default("\n");
+    // //  tty_print_default(itoa((uint32)(VBE_INFO_BlOCK->signature[1]),b,10));
+    // // tty_print_default("\n");
+    // //  tty_print_default(itoa((uint32)(VBE_INFO_BlOCK->signature[2]),b,10));
+    // // // tty_print_default("\n");
+    // //  tty_print_default(itoa((uint32)(sizeof(VBE_MODE_INFO[0])),b,20));
+    // // tty_print_default("\n");
+    //  tty_print_default(itoa((uint32)(VBE_MODE_INFO->PhysBasePtr),b,20));
+    // tty_print_default("\n");
+
+  //   tty_print_default(itoa((uint32)(ptr[4095]),b,10));
+      init_screen(TERMINAL_GRAY);
+      
+      screen_print("Last login: Fri Jun 10 22:46:13 on ttys004",2,0, &SF_MONO_BOLD_FONT);
+      screen_print("martinsimango@Martins-MacBook-Pro-2 ~ % HE",2,22, &SF_MONO_BOLD_FONT);
+      // font_str("Hello lets see how good we can make this",0,9,WHITE);
+
 
    
     // terminal tty;

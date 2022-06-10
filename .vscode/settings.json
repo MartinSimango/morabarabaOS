@@ -5,6 +5,7 @@
         "colours.h": "c",
         "tty.h": "c",
         "string.h": "c",
-        "types.h": "c"
+        "types.h": "c",
+        "font.h": "c"
     }
 }

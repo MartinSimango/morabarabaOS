@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Thu Jun  9 18:11:56 2022
+# Make data base, printed on Fri Jun 10 21:18:35 2022
 
 # Variables
 
@@ -24,6 +24,7 @@ x86_64_VM_SHELL := limactl shell gdb
 VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
+ 
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # automatic
@@ -46,7 +47,7 @@ MAKEFILE_LIST :=  Makefile
 C_OBJECT_FILES := obj/graphics/colours.o obj/graphics/font.o obj/graphics/screen.o obj/idt/idt.o obj/irq/irq.o obj/memory/heap.o obj/memory/kheap.o obj/memory/memory.o obj/string/string.o obj/timer/timer.o obj/tty/tty.o
 # makefile (from `Makefile', line 9)
 GCC := i686-unknown-linux-gnu-gcc 
-# makefile (from `Makefile', line 110)
+# makefile (from `Makefile', line 112)
 NPM := /usr/local/bin/npm
 # environment
 VSCODE_VERBOSE_LOGGING = true
@@ -61,7 +62,7 @@ VSCODE_IPC_HOOK_EXTHOST = /var/folders/cb/szvng6m95dq08_z37f7h6wnc0000gn/T/vscod
 # environment
 VSCODE_CWD = /
 # makefile (from `Makefile', line 36)
-INCLUDE_DIRS :=  -I src/kernel/  -I src/kernel/graphics/  -I src/kernel/idt/  -I src/kernel/io/  -I src/kernel/irq/  -I src/kernel/memory/  -I src/kernel/status/  -I src/kernel/string/  -I src/kernel/timer/  -I src/kernel/tty/  -I src/kernel/types/
+INCLUDE_DIRS :=  -I src/kernel/  -I src/kernel/config/  -I src/kernel/graphics/  -I src/kernel/idt/  -I src/kernel/io/  -I src/kernel/irq/  -I src/kernel/memory/  -I src/kernel/status/  -I src/kernel/string/  -I src/kernel/timer/  -I src/kernel/tty/  -I src/kernel/types/
 # makefile (from `Makefile', line 30)
 SOURCE_FILES_IN_MODULES :=  obj/graphics/colours.o  obj/graphics/font.o  obj/graphics/screen.o  obj/idt/idt.o  obj/irq/irq.o  obj/memory/heap.o  obj/memory/kheap.o  obj/memory/memory.o  obj/string/string.o  obj/timer/timer.o  obj/tty/tty.o
 # environment
@@ -75,7 +76,7 @@ SDKMAN_CANDIDATES_API = https://api.sdkman.io/2
 # environment
 GOPATH = /Users/martinsimango/go
 # makefile (from `Makefile', line 34)
-MODULES_OBJECT_DIR :=  obj/  obj/graphics/  obj/idt/  obj/io/  obj/irq/  obj/memory/  obj/status/  obj/string/  obj/timer/  obj/tty/  obj/types/
+MODULES_OBJECT_DIR :=  obj/  obj/config/  obj/graphics/  obj/idt/  obj/io/  obj/irq/  obj/memory/  obj/status/  obj/string/  obj/timer/  obj/tty/  obj/types/
 # environment
 SDKMAN_PLATFORM = darwinx64
 # environment
@@ -85,14 +86,14 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # makefile (from `Makefile', line 33)
-MODULES := src/kernel/ src/kernel/graphics/ src/kernel/idt/ src/kernel/io/ src/kernel/irq/ src/kernel/memory/ src/kernel/status/ src/kernel/string/ src/kernel/timer/ src/kernel/tty/ src/kernel/types/
+MODULES := src/kernel/ src/kernel/config/ src/kernel/graphics/ src/kernel/idt/ src/kernel/io/ src/kernel/irq/ src/kernel/memory/ src/kernel/status/ src/kernel/string/ src/kernel/timer/ src/kernel/tty/ src/kernel/types/
 # environment
 SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.VZsqX8J0pJ/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
 GOBIN = /Users/martinsimango/go/bin
-# makefile (from `Makefile', line 111)
+# makefile (from `Makefile', line 113)
 CLANG_FORMAT := /usr/local/bin/clang-format
 # makefile (from `Makefile', line 22)
 IMAGE = kernel.iso
@@ -111,7 +112,7 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 HOME = /Users/martinsimango
 # makefile (from `Makefile', line 27)
-ALL_HEADER_FILES := src/kernel/graphics/colours.h src/kernel/graphics/font.h src/kernel/graphics/screen.h src/kernel/idt/idt.h src/kernel/io/io.h src/kernel/irq/irq.h src/kernel/memory/heap.h src/kernel/memory/kheap.h src/kernel/memory/memory.h src/kernel/status/status.h src/kernel/string/string.h src/kernel/timer/timer.h src/kernel/tty/tty.h src/kernel/types/types.h
+ALL_HEADER_FILES := src/kernel/config/config.h src/kernel/graphics/colours.h src/kernel/graphics/font.h src/kernel/graphics/mono.h src/kernel/graphics/screen.h src/kernel/graphics/vbe.h src/kernel/idt/idt.h src/kernel/io/io.h src/kernel/irq/irq.h src/kernel/memory/heap.h src/kernel/memory/kheap.h src/kernel/memory/memory.h src/kernel/status/status.h src/kernel/string/string.h src/kernel/timer/timer.h src/kernel/tty/tty.h src/kernel/types/types.h
 # default
 MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
 # environment
@@ -147,7 +148,7 @@ START_DEBUG := qemu-system-i386 -hda kernel.iso  -S -s
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # makefile (from `Makefile', line 40)
-ASM_OBJECT_FILES := obj/kernel.asm.o obj/idt.asm.o obj/io.asm.o
+ASM_OBJECT_FILES := obj/kernel.asm.o obj/idt.asm.o obj/io.asm.o 
 # default
 MAKE_COMMAND := /Library/Developer/CommandLineTools/usr/bin/make
 # default
@@ -197,7 +198,7 @@ GDB := limactl shell gdb gdb
 # makefile (from `Makefile', line 11)
 OBJCOPY := limactl shell gdb i686-elf-objcopy
 # makefile (from `Makefile', line 42)
-ALL_OBJECT_FILES := obj/kernel.asm.o obj/idt.asm.o obj/io.asm.o obj/graphics/colours.o obj/graphics/font.o obj/graphics/screen.o obj/idt/idt.o obj/irq/irq.o obj/memory/heap.o obj/memory/kheap.o obj/memory/memory.o obj/string/string.o obj/timer/timer.o obj/tty/tty.o obj/kernel.o 
+ALL_OBJECT_FILES := obj/kernel.asm.o obj/idt.asm.o obj/io.asm.o  obj/graphics/colours.o obj/graphics/font.o obj/graphics/screen.o obj/idt/idt.o obj/irq/irq.o obj/memory/heap.o obj/memory/kheap.o obj/memory/memory.o obj/string/string.o obj/timer/timer.o obj/tty/tty.o obj/kernel.o 
 # default
 SUFFIXES := 
 # makefile (from `Makefile', line 23)
@@ -211,9 +212,9 @@ LANG = C
 # environment
 VSCODE_PID = 28119
 # variable set hash-table stats:
+ 
 # Load=99/1024=10%, Rehash=0, Collisions=16/155=10%
 
- 
 # Pattern-specific Variable Values
 
 # No pattern-specific variable values.
@@ -222,21 +223,22 @@ VSCODE_PID = 28119
 
 # src/kernel/irq (device 16777234, inode 31553906): 4 files, no impossibilities.
 # src/kernel/types (device 16777234, inode 31148687): 3 files, no impossibilities.
-# . (device 16777234, inode 11801364): 17 files, no impossibilities.
+# . (device 16777234, inode 11801364): 18 files, no impossibilities.
 # src/kernel/link.ld (device 16777234, inode 31083492): could not be opened.
-# src/kernel/graphics (device 16777234, inode 31144468): 8 files, no impossibilities.
+# src/kernel/graphics (device 16777234, inode 31144468): 10 files, no impossibilities.
 # src/kernel/status (device 16777234, inode 31591572): 3 files, no impossibilities.
 # src/kernel/idt (device 16777234, inode 31144525): 5 files, no impossibilities.
-# src/kernel (device 16777234, inode 12801985): 15 files, no impossibilities.
+# src/kernel (device 16777234, inode 12801985): 16 files, no impossibilities.
 # src/kernel/io (device 16777234, inode 31145843): 4 files, no impossibilities.
 # src/kernel/kernel.asm (device 16777234, inode 30272599): could not be opened.
-# src/kernel/kernel.c (device 16777234, inode 31083493): could not be opened.
+# src/kernel/kernel.c (device 16777234, inode 31701464): could not be opened.
 # src/kernel/timer (device 16777234, inode 31553909): 4 files, no impossibilities.
+# src/kernel/config (device 16777234, inode 31688774): 3 files, no impossibilities.
 # src/kernel/tty (device 16777234, inode 31144335): 4 files, no impossibilities.
 # src/kernel/memory (device 16777234, inode 31143513): 8 files, no impossibilities.
 # src/kernel/string (device 16777234, inode 31147668): 4 files, no impossibilities.
 
-# 79 files, no impossibilities in 15 directories.
+# 86 files, no impossibilities in 16 directories.
 
 # Implicit Rules
 
@@ -256,7 +258,7 @@ view:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 88):
+#  commands to execute (from `Makefile', line 90):
 	xxd $(IMAGE)
 	
 
@@ -308,7 +310,7 @@ start-vm:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 101):
+#  commands to execute (from `Makefile', line 103):
 	limactl start $(x86_64_VM_NAME)
 	
 
@@ -318,7 +320,7 @@ src/kernel/memory/kheap.c:
 #  Modification time never checked.
 #  File has not been updated.
 
-all: clean format build run
+all: clean build run
 #  Command-line target.
 #  Implicit rule search has been done.
 #  File does not exist.
@@ -360,7 +362,7 @@ format: check-tools
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 115):
+#  commands to execute (from `Makefile', line 117):
 	clang-format -style=file -i $(ALL_SOURCE_FILES) $(ALL_HEADER_FILES)
 	
 
@@ -376,7 +378,7 @@ obj/string/string.o: src/kernel/string/string.c
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-09 17:44:25
+#  Last modified 2022-06-10 21:18:32
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -386,7 +388,7 @@ Makefile:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 118):
+#  commands to execute (from `Makefile', line 120):
 	@echo "You need to install npm first"
 	
 
@@ -394,7 +396,7 @@ debug: clean build iso
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 94):
+#  commands to execute (from `Makefile', line 96):
 	$(START_DEBUG) &
 	$(GDB) --iex 'target remote 192.168.5.2:1234'
 	
@@ -442,7 +444,7 @@ disassemble-kernel-object:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 134):
+#  commands to execute (from `Makefile', line 136):
 	objdump -D $(OBJ)/fullkernel.o
 	
 
@@ -458,7 +460,7 @@ obj/:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 121):
+#  commands to execute (from `Makefile', line 123):
 	sudo npm install -g clang-format
 	
 
@@ -471,15 +473,16 @@ build-bootloader:
 	nasm $(BOOTLOADER)/stage_2/loadkernel.asm -f bin -o $(BIN)/loadkernel.bin # 2nd stage bootloader that loads kernel into RAM
 	
 
-build-kernel: obj/ obj/graphics/ obj/idt/ obj/io/ obj/irq/ obj/memory/ obj/status/ obj/string/ obj/timer/ obj/tty/ obj/types/ obj/graphics/colours.o obj/graphics/font.o obj/graphics/screen.o obj/idt/idt.o obj/irq/irq.o obj/memory/heap.o obj/memory/kheap.o obj/memory/memory.o obj/string/string.o obj/timer/timer.o obj/tty/tty.o
-#  Implicit rule search has not been done.
  
+build-kernel: obj/ obj/config/ obj/graphics/ obj/idt/ obj/io/ obj/irq/ obj/memory/ obj/status/ obj/string/ obj/timer/ obj/tty/ obj/types/ obj/graphics/colours.o obj/graphics/font.o obj/graphics/screen.o obj/idt/idt.o obj/irq/irq.o obj/memory/heap.o obj/memory/kheap.o obj/memory/memory.o obj/string/string.o obj/timer/timer.o obj/tty/tty.o
+#  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 58):
 	nasm $(KERNEL)/kernel.asm -g -f elf -o $(OBJ)/kernel.asm.o 
 	nasm $(KERNEL)/idt/idt.asm -g -f elf -o $(OBJ)/idt.asm.o
 	nasm $(KERNEL)/io/io.asm -g -f elf -o $(OBJ)/io.asm.o
+	# nasm $(KERNEL)/grahpics/vbe.asm -g -f elf -o $(OBJ)/vbe.asm.o
 	$(GCC) $(FLAGS) -o $(OBJ)/kernel.o -c $(KERNEL)/kernel.c $(INCLUDE_DIRS)
 	$(LD) -g -relocatable -o $(OBJ)/fullkernel.o $(ALL_OBJECT_FILES) 
 	$(GCC) -T $(KERNEL)/link.ld $(FLAGS) $(OBJ)/fullkernel.o -o $(BIN)/os.bin 
@@ -489,7 +492,7 @@ disassemble-kernel-bin:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 130):
+#  commands to execute (from `Makefile', line 132):
 	$(x86_64_VM_SHELL) objdump -b binary -D -Mintel -mi386 bin/kernel.bin
 	
 
@@ -542,7 +545,7 @@ run:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 78):
+#  commands to execute (from `Makefile', line 80):
 	qemu-system-i386 -hda $(IMAGE)  # -d cpu_reset -monitor stdio -device sb16 -audiodev coreaudio,id=coreaudio,out.frequency=48000,out.channels=2,out.format=s32
 	
 
@@ -579,7 +582,7 @@ clean:
 # ? := 
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/10=10%
-#  commands to execute (from `Makefile', line 83):
+#  commands to execute (from `Makefile', line 85):
 	rm -rf bin/*
 	rm -rf obj/*
 	rm -f *.iso
@@ -610,11 +613,11 @@ stop-vm:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 104):
+#  commands to execute (from `Makefile', line 106):
 	limactl stop $(x86_64_VM_NAME)
 	
 
-obj/string/:
+obj/config/:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -626,7 +629,7 @@ debug-start:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 98):
+#  commands to execute (from `Makefile', line 100):
 	$(START_DEBUG)
 	
 
@@ -642,6 +645,7 @@ obj/graphics/colours.o: src/kernel/graphics/colours.c
 #  Modification time never checked.
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 48):
+ 
 	$(GCC) $(FLAGS) -o $@ -c $< $(INCLUDE_DIRS)
 	
 
@@ -657,7 +661,7 @@ iso:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 72):
+#  commands to execute (from `Makefile', line 74):
 	dd if=$(BIN)/boot.bin  >> $(IMAGE) 
 	dd if=$(BIN)/loadkernel.bin  >> $(IMAGE) 
 	dd if=$(BIN)/os.bin >> $(IMAGE) 
@@ -685,8 +689,16 @@ gen-clang-config:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 126):
+#  commands to execute (from `Makefile', line 128):
 	clang-format -style=llvm -dump-config > .clang-format.template.yaml
+	
+
+obj/string/:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 45):
+	mkdir -p $@
 	
 
 obj/timer/timer.o: src/kernel/timer/timer.c
@@ -699,7 +711,7 @@ obj/timer/timer.o: src/kernel/timer/timer.c
 	
 
 # files hash-table stats:
-# Load=55/1024=5%, Rehash=0, Collisions=9/115=8%
+# Load=56/1024=5%, Rehash=0, Collisions=11/116=9%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -711,6 +723,6 @@ obj/timer/timer.o: src/kernel/timer/timer.c
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Thu Jun  9 18:11:56 2022
+# Finished Make data base on Fri Jun 10 21:18:35 2022
 
  
