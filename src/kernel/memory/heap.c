@@ -105,7 +105,7 @@ void heap_mark_blocks_taken(struct heap_table *table, uint32 start_block,
 void *heap_malloc_block(struct heap *heap, uint32 blocks) {
   uint32 start_block = heap_get_start_block(heap, blocks);
   if (start_block < 0) {
-    tty_kernel_panic(start_block);
+    // tty_kernel_panic(start_block);
   }
 
   heap_mark_blocks_taken(heap->table, start_block, blocks);

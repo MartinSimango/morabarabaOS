@@ -87,7 +87,7 @@ GDTLoader db "GDT finished loading", 0x0d, 0
 
 LoadKernel:
     mov eax, 2 ; sector to read
-    mov ecx, 100 ; number of sectors to read
+    mov ecx, 200 ; number of sectors to read
     mov edi, 0x0100000 ; where to load kernel into address
     call ata_lba_read
     jmp  codeseg:0x0100000

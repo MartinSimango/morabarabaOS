@@ -74,7 +74,7 @@ iso:
 	dd if=$(BIN)/boot.bin  >> $(IMAGE) 
 	dd if=$(BIN)/loadkernel.bin  >> $(IMAGE) 
 	dd if=$(BIN)/os.bin >> $(IMAGE) 
-	dd if=/dev/zero bs=512 count=100 >> $(IMAGE)
+	dd if=/dev/zero bs=512 count=200 >> $(IMAGE)
 
 run:
 	qemu-system-i386 -hda $(IMAGE)  # -d cpu_reset -monitor stdio -device sb16 -audiodev coreaudio,id=coreaudio,out.frequency=48000,out.channels=2,out.format=s32

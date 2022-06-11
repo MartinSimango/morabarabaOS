@@ -21,3 +21,5 @@ typedef struct font {
 font font_set_color(font font, RGB color);
 
 font font_scale(font font, uint8 x, uint8 y);
+
+uint8 font_get_char_width(font *font, char c);

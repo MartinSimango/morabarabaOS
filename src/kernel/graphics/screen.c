@@ -2,10 +2,7 @@
 #include "io.h"
 #include "types.h"
 
-uint16 screen_row;
-uint16 screen_col;
-
-void init_screen(RGB color) {
+void screen_init(RGB color) {
 
   RGB *VGA_MEMORY = (RGB *)VBE_MODE_INFO->PhysBasePtr;
 

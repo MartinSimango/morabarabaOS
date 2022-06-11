@@ -1,39 +1,34 @@
 #ifndef _TTY_
 #define _TTY_
 
+#include "SFMonoBold.h"
+#include "colours.h"
 #include "types.h"
+#include "vbe.h"
 
-#define VGA_HEIGHT 20
-#define VGA_WIDTH 80
+typedef struct tty {
+  RGB background_color;
+  uint16 tty_row;
+  uint16 tty_col;
+  struct font fnt;
+} tty;
 
-typedef uint8 tty_color;
+static struct tty DefaultTTY = {.fnt = SF_MONO_BOLD_FONT,
+                                .tty_row = 0,
+                                .tty_col = 2,
+                                .background_color = TERMINAL_GRAY};
 
-typedef struct terminal {
-  tty_color text_color;
-  uint8 terminal_row;
-  uint8 terminal_col;
-} terminal;
+void tty_initialize(tty *tty);
 
-static const tty_color TTY_CLEAR = 0;
-static const tty_color TTY_BLUE = 1;
-static const tty_color TTY_GREEN = 2;
-static const uint8 TTY_BLUE_GREEN = 3;
-static const uint8 TTY_WHITE = 15;
+void tty_clear(tty *tty);
 
-static struct terminal DefaultTTY = {
-    .text_color = TTY_WHITE, .terminal_col = 0, .terminal_row = 0};
+void tty_put_char(tty *t, char c);
 
-void tty_initialize(terminal *tty);
+void tty_print(tty *t, const char *s);
 
-void tty_clear(terminal *tty);
+void tty_set_text_color(tty *t, RGB text_color);
 
-void tty_put_char(terminal *, char, uint8, uint8);
-
-void tty_print(terminal *, const char *);
-
-void tty_set_text_color(terminal *t, tty_color text_color);
-
-uint16 tty_make_video_mem_char(uint8 c, uint8 text_color);
+// uint16 tty_make_video_mem_char(uint8 c, uint8 text_color);
 
 void tty_init();
 

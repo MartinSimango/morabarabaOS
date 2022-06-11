@@ -17,11 +17,11 @@ extern void int20h();
 struct idt_desc idt_descriptors[TOTAL_INTERRUPTS];
 struct idtr_desc idtr_descriptor;
 
-void idt_zero() { tty_print(&DefaultTTY, "Divide by zero error\n"); }
+// void idt_zero() { tty_print(&DefaultTTY, "Divide by zero error\n"); }
 
 // todo need to find out which PiC send command by looking at interrupt number
 void int20h_handler() {
-  tty_print(&DefaultTTY, "Timer\n");
+  // tty_print(&DefaultTTY, "Timer\n");
   outb(PIC1, PIC_EOI);
 }
 
@@ -45,7 +45,7 @@ void idt_init() {
   for (uint16 i = 0; i < TOTAL_INTERRUPTS; i++) {
     idt_set(i, no_interrupt);
   }
-  idt_set(0, idt_zero);
+  // idt_set(0, idt_zero);
   // idt_set(0x20, int20h);
 
   idt_load(&idtr_descriptor);

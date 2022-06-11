@@ -6,6 +6,8 @@
         "tty.h": "c",
         "string.h": "c",
         "types.h": "c",
-        "font.h": "c"
+        "font.h": "c",
+        "sfmonobold.h": "c",
+        "io.h": "c"
     }
 }

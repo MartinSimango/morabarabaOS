@@ -91,39 +91,13 @@
 // }
 void start_kernel() {
   
-    // char s;
-    // char b[125];
-    // tty_init();
-    // kheap_init();
-    // idt_init();
-    // irq_init();
-    // enable_interrupts();
+    char s;
+    char b[125];
+    tty_init();
+    kheap_init();
+    idt_init();
+    irq_init();
+    enable_interrupts();
 
-
-    // // tty_print_default(itoa((uint32)(VBE_INFO_BlOCK->signature[0]),b,10));
-    // // tty_print_default("\n");
-    // //  tty_print_default(itoa((uint32)(VBE_INFO_BlOCK->signature[1]),b,10));
-    // // tty_print_default("\n");
-    // //  tty_print_default(itoa((uint32)(VBE_INFO_BlOCK->signature[2]),b,10));
-    // // // tty_print_default("\n");
-    // //  tty_print_default(itoa((uint32)(sizeof(VBE_MODE_INFO[0])),b,20));
-    // // tty_print_default("\n");
-    //  tty_print_default(itoa((uint32)(VBE_MODE_INFO->PhysBasePtr),b,20));
-    // tty_print_default("\n");
-
-  //   tty_print_default(itoa((uint32)(ptr[4095]),b,10));
-      init_screen(TERMINAL_GRAY);
-      
-      screen_print("Last login: Fri Jun 10 22:46:13 on ttys004",2,0, &SF_MONO_BOLD_FONT);
-      screen_print("martinsimango@Martins-MacBook-Pro-2 ~ % HE",2,22, &SF_MONO_BOLD_FONT);
-      // font_str("Hello lets see how good we can make this",0,9,WHITE);
-
-
-   
-    // terminal tty;
-    // tty_initialize(&tty);
-    // // enable_cursor(1,10);
-    // tty_set_text_color(&tty, TTY_GREEN);
-    // tty_print(&tty, "Hello World! What is going on today x X?\nHi");
-    // init_screen();
+    tty_print_default("martinsimango@customkernel ~ %");
 }
