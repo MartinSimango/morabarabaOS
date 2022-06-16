@@ -8,6 +8,20 @@
         "types.h": "c",
         "font.h": "c",
         "sfmonobold.h": "c",
-        "io.h": "c"
+        "io.h": "c",
+        "sfmonosemibold.h": "c",
+        "sfmonoregular_25.h": "c",
+        "kheap.h": "c",
+        "timer.h": "c",
+        "stdio.h": "c",
+        "stdlib.h": "c",
+        "unistd.h": "c",
+        "time.h": "c",
+        "status.h": "c",
+        "math.h": "c",
+        "idt.h": "c",
+        "sb16.h": "c",
+        "vbe.h": "c",
+        "memory.h": "c"
     }
 }

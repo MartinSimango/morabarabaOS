@@ -6,8 +6,8 @@ void screen_init(RGB color) {
 
   RGB *VGA_MEMORY = (RGB *)VBE_MODE_INFO->PhysBasePtr;
 
-  for (uint32 width = 0; width < SCREEN_WIDTH; width++) {
-    for (uint32 height = 0; height < SCREEN_HEIGHT; height++) {
+  for (uint16 width = 0; width < SCREEN_WIDTH; width++) {
+    for (uint16 height = 0; height < SCREEN_HEIGHT; height++) {
       uint32 offset = width + height * SCREEN_WIDTH;
       VGA_MEMORY[offset] = color;
     }

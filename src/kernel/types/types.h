@@ -7,6 +7,13 @@ typedef unsigned int uint32;
 typedef unsigned long long uint64;
 typedef unsigned int size_t;
 
+typedef char int8;
+typedef short int16;
+typedef int int32;
+typedef long long int64;
+
+typedef double float64;
+
 #define NULL ((void *)0)
 
 #define KILOBYTE 1024

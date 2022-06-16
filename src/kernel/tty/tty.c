@@ -1,6 +1,7 @@
 #include "tty.h"
 #include "screen.h"
 #include "string.h"
+#include "timer.h"
 #include "vbe.h"
 
 void tty_initialize(tty *t) { tty_clear(t); }
@@ -11,6 +12,7 @@ void tty_clear(tty *t) {
       screen_draw_pixel(t->background_color, j, i);
     }
   }
+
   t->tty_row = 0;
   t->tty_col = 2;
 }
@@ -21,12 +23,12 @@ void tty_put_char(tty *t, char c) {
     t->tty_col = 2;
     return;
   }
- 
-  if (t->tty_col +font_get_char_width(&t->fnt, c) + 2 >= SCREEN_WIDTH) {
+
+  if (t->tty_col + font_get_char_width(&t->fnt, c) + 2 >= SCREEN_WIDTH) {
     t->tty_row += t->fnt.font_height;
     t->tty_col = 2;
   }
-  screen_print(&c, t->tty_col ,t->tty_row, &t->fnt);
+  screen_print(&c, t->tty_col, t->tty_row, &t->fnt);
 
   t->tty_col += font_get_char_width(&t->fnt, c) + 2;
 }
@@ -44,12 +46,19 @@ void tty_init() { tty_initialize(&DefaultTTY); }
 
 void tty_print_default(const char *s) { tty_print(&DefaultTTY, s); }
 
+void tty_print_int_default(uint32 num) {
+  char buf[256];
+  tty_print_default(itoa(num, buf, 256));
+}
+
 // todo add error number
 void tty_kernel_panic(uint8 error_num) {
   DefaultTTY.fnt.font_color = BLACK;
-  DefaultTTY.background_color = SKY_BLUE;
+  DefaultTTY.background_color = BLUE_SCREEN;
   tty_clear(&DefaultTTY);
-  tty_print_default("Kernel has paniced!!!\n");
-  while (1) {
-  }
+  // change how to print error number
+  tty_print_default("Kernel Panick!!! - ");
+  tty_print_int_default(error_num);
+  while (1)
+    ;
 }

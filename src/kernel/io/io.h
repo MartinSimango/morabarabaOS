@@ -13,6 +13,12 @@ void outb(uint16 port, uint8 value);
 
 void outw(uint16 port, uint16 value);
 
+static inline uint8 low_byte(uint16 value) { return (uint8)(value & 0xFF); }
+
+static inline uint8 high_byte(uint16 value) {
+  return (uint8)((value >> 8) & 0xFF);
+}
+
 static void inline enable_interrupts() { STI(); }
 
 static void inline disable_interrupts() { CLI(); }

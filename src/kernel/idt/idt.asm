@@ -1,11 +1,14 @@
 section .asm
 
 global idt_load
-global int20h
+global int20h_timer
+global int25h_sound
 global no_interrupt
 
-extern int20h_handler 
+extern int20h_timer_handler 
 extern no_interrupt_handler
+extern int25h_sound_handler
+
 ; each 
 idt_load:
     push ebp
@@ -18,15 +21,23 @@ idt_load:
     ret
     
 
-int20h:
-
+int20h_timer:
     cli
     pushad
-    call int20h_handler
+    call int20h_timer_handler
     popad
     sti
     iret
 
+    
+
+int25h_sound:
+    cli
+    pushad
+    call int25h_sound_handler
+    popad
+    sti
+    iret
 
 no_interrupt:
     cli

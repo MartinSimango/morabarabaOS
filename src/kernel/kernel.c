@@ -7,6 +7,9 @@
 #include "kheap.h"
 #include "vbe.h"
 #include "SFMonoBold.h"
+#include "timer.h"
+#include "sb16.h"
+#include "fpu.h"
 
 // // fixed width integer types
 // typedef unsigned char u8;
@@ -89,15 +92,71 @@
 // 	outb(0x3D4, 0x0B);
 // 	outb(0x3D5, (inb(0x3D5) & 0xE0) | cursor_end);
 // }
+
+
+ //Play sound using built in speaker
+//  static void play_sound(uint32 nFrequence) {
+//  	uint32 Div;
+//  	uint8 tmp;
+ 
+//         //Set the PIT to the desired frequency
+//  	Div = 1193180 / nFrequence;
+//  	outb(0x43, 0xb6);
+//  	outb(0x42, (uint8) (Div) );
+//  	outb(0x42, (uint8) (Div >> 8));
+ 
+//         //And play the sound using the PC speaker
+//  	tmp = insb(0x61);
+//   	if (tmp != (tmp | 3)) {
+//  		outb(0x61, tmp | 3);
+//  	}
+//  }
+ 
+//  //make it shutup
+//  static void nosound() {
+//  	uint8 tmp = insb(0x61) & 0xFC;
+ 
+//  	outb(0x61, tmp);
+//  }
+ 
+//  //Make a beep
+//  void beep() {
+//  	 play_sound(1);
+//     timer_sleep(1);
+//      	nosound();
+//     play_sound(440);
+//     timer_sleep(1);
+//      	 nosound();
+
+//  	//  play_sound(440);
+//   //  timer_sleep(250);
+
+//  	//  nosound();
+//           // set_PIT_2(old_frequency);
+//  }
+
 void start_kernel() {
   
-    char s;
-    char b[125];
-    tty_init();
+ 
     kheap_init();
     idt_init();
     irq_init();
-    enable_interrupts();
+    timer_init();
 
-    tty_print_default("martinsimango@customkernel ~ %");
+
+
+    fpu_init();
+    enable_interrupts();
+        tty_init();
+
+
+    tty_print_default("martinsimango@customkernel ~ % Hello World!\n");
+    sb16_init(); 
+     music_init();
+
+    // timer_sleep(1000);
+    // sb16_pause_sound();
+
+
+    
 }

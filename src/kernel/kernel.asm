@@ -12,26 +12,25 @@ _start:
     mov    gs, ax
     mov    ss, ax
 
-    mov    esp, 0x2ffff  ; Set stack to grow downwards from 0x30000 - so you have 0x30000 until 0x7e00  (max of this should be 0x9fc00)
+    mov    esp, 0x2fffff  ; Set stack to grow downwards from 0x30000 - so you have 0x30000 until 0x7e00  (max of this should be 0x9fc00)
      
-   ; call   remap_master_pic
+;    call   remap_master_pic
 
     call   start_kernel ; go to the start of the kernel code
     
-  
     jmp $
 
-; remap_master_pic:
-;      ; Remap the master PIC
-;     mov al, 00010001b
-;     out 0x20, al ; Tell master PIC
+remap_master_pic:
+     ; Remap the master PIC
+    mov al, 00010001b
+    out 0x20, al ; Tell master PIC
 
-;     mov al, 0x20; Interrupt 0x20 is where master ISR should start
-;     out 0x21, al
+    mov al, 0x20; Interrupt 0x20 is where master ISR should start
+    out 0x21, al
 
-;     mov al, 00000001b
-;     out 0x21, al
-;     ret
+    mov al, 00000001b
+    out 0x21, al
+    ret
     
 
 

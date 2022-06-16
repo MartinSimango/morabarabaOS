@@ -20,7 +20,7 @@ KERNEL=src/kernel
 OBJ=obj
 BIN=bin
 IMAGE=kernel.iso
-FLAGS=-g -ffreestanding -falign-jumps -falign-functions -falign-labels -falign-loops -fstrength-reduce -fomit-frame-pointer -finline-functions -Wno-unsused-function -fno-builtin -Werror -Wno-unused-label -Wno-cpp -O0 -Wno-unused-parameter -nostdlib -nostartfiles -nodefaultlibs -Wall -Iinc -std=gnu99  -Wno-unused-variable -Wno-unsused-function
+FLAGS=-g -ffreestanding -falign-jumps -falign-functions -falign-labels -falign-loops -fstrength-reduce -fomit-frame-pointer -finline-functions -Wno-unsused-function -fno-builtin -Werror -Wno-unused-label -Wno-cpp -O0 -Wno-unused-parameter -nostdlib -nostartfiles -nodefaultlibs -Wall -Iinc -std=gnu99  -Wno-unused-variable -Wno-unsused-function 
 START_DEBUG:=qemu-system-i386 -hda $(IMAGE)  -S -s 
 
 
@@ -74,10 +74,10 @@ iso:
 	dd if=$(BIN)/boot.bin  >> $(IMAGE) 
 	dd if=$(BIN)/loadkernel.bin  >> $(IMAGE) 
 	dd if=$(BIN)/os.bin >> $(IMAGE) 
-	dd if=/dev/zero bs=512 count=200 >> $(IMAGE)
+	dd if=/dev/zero bs=512 count=600 >> $(IMAGE)
 
 run:
-	qemu-system-i386 -hda $(IMAGE)  # -d cpu_reset -monitor stdio -device sb16 -audiodev coreaudio,id=coreaudio,out.frequency=48000,out.channels=2,out.format=s32
+	qemu-system-i386 -hda $(IMAGE) -device sb16 #-d cpu_reset -monitor stdio -audiodev coreaudio,id=coreaudio,out.frequency=48000,out.channels=2,out.format=s32
 
 all: clean  build run
 
