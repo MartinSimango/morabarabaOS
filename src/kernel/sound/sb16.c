@@ -73,20 +73,23 @@ void fill(int16 *buf, uint16 len) {
   for (int i = 0; i < len; i++) {
     float64 val = 0;
     for (int n = 0; n < sb16_card.notes_length; n++) {
-      Note *note = &sb16_card.notes[n];
-      val += music_get_sample(*note, SAMPLE_RATE, note->volume, sample_scale)*50;
-      
-      // tty_print_int_default(note->sample_count *10000);
-
-      note->sample_count += (1.0/sample_scale);
-      // if (note->sample_count > SAMPLE_RATE/note->freq) {
-      //   note->sample_count = 0;
+      // if (i==0){
+      // tty_print_default(" ");
+      // tty_print_int_default(sb16_card.notes[n].freq);
       // }
+      Note *note = &sb16_card.notes[n];
+      // if(note->volume == 0) {
+
+      //}
+      val += music_get_sample(*note, SAMPLE_RATE, note->volume, sample_scale);
+      note->sample_count += (1.0 / sample_scale);
+      if (note->sample_count > SAMPLE_RATE / note->freq) {
+        note->sample_count = 0;
+      }
     }
 
-    int16 total = (int16)(val*50/2);
-    buf[i] = val;
-
+    int16 total = (int16)(val * 255);
+    buf[i] = total;
   }
 }
 
@@ -225,16 +228,21 @@ void sb16_pause_sound() { sb16_DSP_write(DSP_PAUSE_DMA_16); }
 void sb16_play_sound() { sb16_DSP_write(DSP_CONTINUE_DMA_16); }
 
 void sb16_set_notes(Note *notes, uint8 len) {
-  memset(sb16_card.notes, 0, sizeof(sb16_card.notes));
-  memcpy(sb16_card.notes, notes, len*sizeof(Note));
+  // memset(sb16_card.notes, 0, sizeof(sb16_card.notes));
+  sb16_card.notes = notes;
+  // memcpy(sb16_card.notes, notes, len * sizeof(Note));
   sb16_card.notes_length = len;
 }
 
-uint16 sb16_set_samples(int16* samples, uint16 buffer_len) {
+uint16 sb16_set_samples(int16 *samples, uint16 buffer_len) {
 
   memset(sb16_card.samples, 0, sizeof(sb16_card.samples));
   // copy min of buffer_len and buffer
   memcpy(sb16_card.samples, samples, (size_t)min(buffer_len, BUFFER_SIZE));
 
   return min(buffer_len, BUFFER_SIZE);
+}
+
+struct sb16 get_sb16_card() {
+  return sb16_card;
 }

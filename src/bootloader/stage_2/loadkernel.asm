@@ -94,6 +94,11 @@ LoadKernel:
     mov ecx, 255 ; number of sectors to read
     mov edi, 0x011FE00 ; where to load kernel into address
     call ata_lba_read
+    ; mov eax, 512
+    ; mov ecx, 255 ; number of sectors to read
+    ; mov edi, 0x13FC00 ; where to load kernel into address
+    ; call ata_lba_read
+
     jmp  codeseg:0x0100000
 
 ; disk driver to read from disk (talking to motherboard to read from disk)

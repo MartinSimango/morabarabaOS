@@ -22,6 +22,7 @@
         "idt.h": "c",
         "sb16.h": "c",
         "vbe.h": "c",
-        "memory.h": "c"
+        "memory.h": "c",
+        "chords.h": "c"
     }
 }

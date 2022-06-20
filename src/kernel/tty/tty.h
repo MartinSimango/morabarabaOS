@@ -1,8 +1,8 @@
 #ifndef _TTY_
 #define _TTY_
 
-// #include "SFMonoBold.h"
-#include "SFMonoRegular_25.h"
+#include "SFMonoBold.h"
+// #include "SFMonoRegular_25.h"
 #include "colours.h"
 #include "font.h"
 #include "types.h"
@@ -15,7 +15,7 @@ typedef struct tty {
   struct font fnt;
 } tty;
 
-static struct tty DefaultTTY = {.fnt = SF_MONO_REGULAR_25_FONT,
+static struct tty DefaultTTY = {.fnt = SF_MONO_BOLD_FONT,
                                 .tty_row = 0,
                                 .tty_col = 2,
                                 .background_color = TERMINAL_GRAY};

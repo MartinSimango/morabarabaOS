@@ -14,7 +14,7 @@ static struct sb16 {
   uint16 dsp_write_port;
   uint16 dsp_read_status_port;
   int16 samples[BUFFER_SIZE];
-  Note notes[8];
+  Note *notes;
   uint8 notes_length;
 } sb16_card;
 
@@ -51,5 +51,7 @@ void sb16_play_sound();
 void sb16_set_notes(Note *notes, uint8 len);
 
 uint16 sb16_set_samples(int16 *samples, uint16 buffer_len);
+
+struct sb16 get_sb16_card();
 
 #endif

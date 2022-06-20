@@ -28,16 +28,18 @@ void timer_init() {
 
 // time in ms
 void timer_sleep(uint32 time) {
-  if (time > 200) {
-    time =
-        time -
-        200; // cut out some milliseconds due to inaccuaries with clock in qemu
-  }
-  uint64 start = get_timer_count();
+  // uint32 time_to_cut = time/1000.0 *160;
+  // time = time - time_to_cut; // cut out some milliseconds due to inaccuaries
+  // with clock in qemu uint64 start = get_timer_count();
 
-  while ((get_timer_count() - start) < time) {
-    // tty_print_int_default(timer.tick);
-    // tty_print_default(" ");
-    // tty_print_int_default(get_timer_count());
+  // while ((get_timer_count() - start) < time) {
+  // }
+  uint64 clock_speed = 150000;
+  uint32 count = 0;
+  while (count < time) {
+    for (uint64 i = 0; i < clock_speed; i++) {
+      asm("nop");
+    }
+    count++;
   }
 }

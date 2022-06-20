@@ -24,13 +24,14 @@ void tty_put_char(tty *t, char c) {
     return;
   }
 
-  if (t->tty_col + font_get_char_width(&t->fnt, c) + 2 >= SCREEN_WIDTH) {
+  uint8 char_width = font_get_char_width(&t->fnt, c) + 2;
+  if (t->tty_col + char_width >= SCREEN_WIDTH) {
     t->tty_row += t->fnt.font_height;
     t->tty_col = 2;
   }
   screen_print(&c, t->tty_col, t->tty_row, &t->fnt);
 
-  t->tty_col += font_get_char_width(&t->fnt, c) + 2;
+  t->tty_col += char_width;
 }
 
 void tty_print(tty *t, const char *s) {

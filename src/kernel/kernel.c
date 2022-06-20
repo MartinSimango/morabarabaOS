@@ -6,7 +6,6 @@
 #include "irq.h"
 #include "kheap.h"
 #include "vbe.h"
-#include "SFMonoBold.h"
 #include "timer.h"
 #include "sb16.h"
 #include "fpu.h"
@@ -142,19 +141,16 @@ void start_kernel() {
     idt_init();
     irq_init();
     timer_init();
-
-
-
     fpu_init();
     enable_interrupts();
-        tty_init();
+
+    tty_init();
+
 
 
     tty_print_default("martinsimango@customkernel ~ % Hello World!\n");
     sb16_init(); 
-     music_init();
-
-    // timer_sleep(1000);
+    music_init();
     // sb16_pause_sound();
 
 

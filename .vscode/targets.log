@@ -6,8 +6,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
+ 
 
-# Make data base, printed on Thu Jun 16 20:25:46 2022
+# Make data base, printed on Sat Jun 18 00:20:18 2022
 
 # Variables
 
@@ -23,6 +24,7 @@ x86_64_VM_SHELL := limactl shell gdb
 VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
+ 
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # automatic
@@ -110,7 +112,7 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 HOME = /Users/martinsimango
 # makefile (from `Makefile', line 27)
-ALL_HEADER_FILES := src/kernel/config/config.h src/kernel/fonts/SFMonoBold.h src/kernel/fonts/SFMonoRegular_25.h src/kernel/fonts/font.h src/kernel/fpu/fpu.h src/kernel/graphics/colours.h src/kernel/graphics/screen.h src/kernel/graphics/vbe.h src/kernel/idt/idt.h src/kernel/io/io.h src/kernel/irq/irq.h src/kernel/math/math.h src/kernel/memory/heap.h src/kernel/memory/kheap.h src/kernel/memory/memory.h src/kernel/sound/music.h src/kernel/sound/sb16.h src/kernel/sound/sound.h src/kernel/status/status.h src/kernel/string/string.h src/kernel/timer/timer.h src/kernel/tty/tty.h src/kernel/types/types.h
+ALL_HEADER_FILES := src/kernel/config/config.h src/kernel/fonts/SFMonoBold.h src/kernel/fonts/SFMonoRegular_25.h src/kernel/fonts/font.h src/kernel/fpu/fpu.h src/kernel/graphics/colours.h src/kernel/graphics/screen.h src/kernel/graphics/vbe.h src/kernel/idt/idt.h src/kernel/io/io.h src/kernel/irq/irq.h src/kernel/math/math.h src/kernel/memory/heap.h src/kernel/memory/kheap.h src/kernel/memory/memory.h src/kernel/sound/chords.h src/kernel/sound/music.h src/kernel/sound/notes.h src/kernel/sound/sb16.h src/kernel/sound/scale.h src/kernel/sound/sound.h src/kernel/status/status.h src/kernel/string/string.h src/kernel/timer/timer.h src/kernel/tty/tty.h src/kernel/types/types.h
 # default
 MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
 # environment
@@ -195,13 +197,13 @@ GDB := limactl shell gdb gdb
 ^F = $(notdir $^)
 # makefile (from `Makefile', line 11)
 OBJCOPY := limactl shell gdb i686-elf-objcopy
- 
 # makefile (from `Makefile', line 42)
 ALL_OBJECT_FILES := obj/kernel.asm.o obj/idt.asm.o obj/io.asm.o  obj/fonts/font.o obj/fpu/fpu.o obj/graphics/screen.o obj/idt/idt.o obj/irq/irq.o obj/math/math.o obj/memory/heap.o obj/memory/kheap.o obj/memory/memory.o obj/sound/music.o obj/sound/sb16.o obj/sound/sound.o obj/string/string.o obj/timer/timer.o obj/tty/tty.o obj/kernel.o 
 # default
 SUFFIXES := 
 # makefile (from `Makefile', line 23)
-FLAGS = -g -ffreestanding -falign-jumps -falign-functions -falign-labels -falign-loops -fstrength-reduce -fomit-frame-pointer -finline-functions -Wno-unsused-function -fno-builtin -Werror -Wno-unused-label -Wno-cpp -O0 -Wno-unused-parameter -nostdlib -nostartfiles -nodefaultlibs -Wall -Iinc -std=gnu99  -Wno-unused-variable -Wno-unsused-function 
+ 
+FLAGS = -g -Wno-unused-but-set-variable -ffreestanding -falign-jumps -falign-functions -falign-labels -falign-loops -fstrength-reduce -fomit-frame-pointer -finline-functions -Wno-unsused-function -fno-builtin -Werror -Wno-unused-label -Wno-cpp -O0 -Wno-unused-parameter -nostdlib -nostartfiles -nodefaultlibs -Wall -Iinc -std=gnu99  -Wno-unused-variable -Wno-unsused-function 
 # default
 .INCLUDE_DIRS = /usr/local/include
 # environment
@@ -230,17 +232,17 @@ VSCODE_PID = 80598
 # src/kernel (device 16777230, inode 12801985): 20 files, no impossibilities.
 # src/kernel/io (device 16777230, inode 31145843): 4 files, no impossibilities.
 # src/kernel/kernel.asm (device 16777230, inode 32226868): could not be opened.
-# src/kernel/kernel.c (device 16777230, inode 32226869): could not be opened.
+# src/kernel/kernel.c (device 16777230, inode 32351743): could not be opened.
 # src/kernel/timer (device 16777230, inode 31553909): 4 files, no impossibilities.
 # src/kernel/fpu (device 16777230, inode 32133994): 4 files, no impossibilities.
-# src/kernel/sound (device 16777230, inode 31932895): 8 files, no impossibilities.
+# src/kernel/sound (device 16777230, inode 31932895): 11 files, no impossibilities.
 # src/kernel/config (device 16777230, inode 31688774): 3 files, no impossibilities.
 # src/kernel/tty (device 16777230, inode 31144335): 4 files, no impossibilities.
 # src/kernel/fonts (device 16777230, inode 31726750): 6 files, no impossibilities.
 # src/kernel/memory (device 16777230, inode 31143513): 8 files, no impossibilities.
 # src/kernel/string (device 16777230, inode 31147668): 4 files, no impossibilities.
 
-# 110 files, no impossibilities in 20 directories.
+# 113 files, no impossibilities in 20 directories.
 
 # Implicit Rules
 
@@ -427,7 +429,7 @@ obj/string/string.o: src/kernel/string/string.c
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-16 15:10:00
+#  Last modified 2022-06-18 00:20:09
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -445,7 +447,6 @@ debug: clean build iso
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 #  commands to execute (from `Makefile', line 96):
 	$(START_DEBUG) &
 	$(GDB) --iex 'target remote 192.168.5.2:1234'
@@ -462,6 +463,7 @@ obj/memory/:
 build: build-bootloader build-kernel iso
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 # Not a target:
@@ -719,7 +721,6 @@ debug-start:
 src/kernel/memory/memory.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
- 
 #  File has not been updated.
 
 # Not a target:
@@ -738,13 +739,14 @@ obj/status/:
 
 iso:
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 74):
 	dd if=$(BIN)/boot.bin  >> $(IMAGE) 
 	dd if=$(BIN)/loadkernel.bin  >> $(IMAGE) 
 	dd if=$(BIN)/os.bin >> $(IMAGE) 
-	dd if=/dev/zero bs=512 count=600 >> $(IMAGE)
+	dd if=/dev/zero bs=512 count=1000 >> $(IMAGE)
 	
 
 obj/idt/idt.o: src/kernel/idt/idt.c
@@ -806,6 +808,7 @@ obj/math/math.o: src/kernel/math/math.c
 
 # files hash-table stats:
 # Load=68/1024=7%, Rehash=0, Collisions=19/140=14%
+ 
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -816,7 +819,8 @@ obj/math/math.o: src/kernel/math/math.c
 # # of strcache buffers: 1
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+ 
 
-# Finished Make data base on Thu Jun 16 20:25:46 2022
+# Finished Make data base on Sat Jun 18 00:20:18 2022
 
  
