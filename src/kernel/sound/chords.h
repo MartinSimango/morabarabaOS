@@ -14,36 +14,18 @@ typedef struct Chord {
   Note notes[12];
 } Chord;
 
-static inline void chords_init() { scale_init(); }
+void chords_init();
 
-static inline uint8 chord_degree_to_note_count(uint8 degree) {
-  return (degree == 0) ? 3 : degree - 2;
-}
+uint8 chord_degree_to_note_count(uint8 degree);
 
-static inline Chord Maj(Note root, uint8 degree) {
-  degree = degree >= 15 ? 0 : degree;
-  degree = (degree % 2 != 0) ? degree - 1 : degree; // degree must be odd
-  Chord c;
-  c.num_of_notes = chord_degree_to_note_count(degree);
-  uint8 d = 1;
-  for (uint8 i = 0; i < c.num_of_notes; i++) {
-    c.notes[i] = get_note_in_scale(root, d, MAJOR_SCALE);
-    d += 2;
-  }
-  return c;
-}
+void chord_init(Chord *chord);
 
-static inline Chord Min(Note root, uint8 degree) {
-  degree = degree >= 15 ? 0 : degree;
-  degree = (degree % 2 != 0) ? degree - 1 : degree; // degree must be odd
-  Chord c;
-  c.num_of_notes = chord_degree_to_note_count(degree);
-  uint8 d = 1;
-  for (uint8 i = 0; i < c.num_of_notes; i++) {
-    c.notes[i] = get_note_in_scale(root, d, MINOR_SCALE);
-    d += 2;
-  }
-  return c;
-}
+Chord chord_instance();
+
+void chord_add_note(Chord *chord, Note note);
+
+Chord Maj(Note root, uint8 degree);
+
+Chord Min(Note root, uint8 degree);
 
 #endif

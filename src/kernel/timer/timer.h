@@ -32,4 +32,25 @@ void timer_sleep(uint32 time);
 
 uint64 get_timer_count();
 
+static uint32 rseed = 1;
+
+static inline void seed(uint32 s) { rseed = s; }
+
+static inline uint32 rand() {
+  static uint32 x = 123456789;
+  static uint32 y = 362436069;
+  static uint32 z = 521288629;
+  static uint32 w = 88675123;
+
+  x *= 23786259 - rseed;
+
+  uint32 t;
+
+  t = x ^ (x << 11);
+  x = y;
+  y = z;
+  z = w;
+  return w = w ^ (w >> 19) ^ t ^ (t >> 8);
+}
+
 #endif

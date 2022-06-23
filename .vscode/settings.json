@@ -23,6 +23,13 @@
         "sb16.h": "c",
         "vbe.h": "c",
         "memory.h": "c",
-        "chords.h": "c"
+        "chords.h": "c",
+        "melody.h": "c",
+        "beat.h": "c",
+        "music.h": "c",
+        "speaker.h": "c",
+        "song_claire_de_lune.h": "c",
+        "song_oh_sussana.h": "c",
+        "fpu.h": "c"
     }
 }

@@ -18,7 +18,7 @@ _start:
 
     call   start_kernel ; go to the start of the kernel code
     
-    jmp $
+    ; jmp $
 
 remap_master_pic:
      ; Remap the master PIC

@@ -17,7 +17,7 @@ void kheap_init() {
                         &kernel_heap_table);
 
   if (res < 0) {
-    tty_print_default("Failed to init heap!");
+    tty_print_default("Failed to init heap!"); // todo: make kernel panic
   } else {
     tty_print_default("Heap is initialized!\n");
   }

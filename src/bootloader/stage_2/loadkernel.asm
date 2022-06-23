@@ -10,18 +10,22 @@ jmp EnterProtectiveMode
 EnterProtectiveMode:
 
     call PrintProtectiveModeMessage
-    call clear_screen
-
+    ; call clear_screen
+   
     cli
-
     call EnableA20
+
     call SetVideoMode
     call vbe_get_info
  
     
     lgdt [gdt] ; load gdt
+    
+
  
     call EnablePE
+
+    
 
     jmp codeseg:LoadKernel ; far jmp  new cs must be offset of code segment in GDT .ie codeseg is the offset of the code segment in the GDT
                                      ; i.e codeseg is codeseg bytes away from the start of the GDT and codeseg bytes away from the GDT is
@@ -94,12 +98,11 @@ LoadKernel:
     mov ecx, 255 ; number of sectors to read
     mov edi, 0x011FE00 ; where to load kernel into address
     call ata_lba_read
-    ; mov eax, 512
-    ; mov ecx, 255 ; number of sectors to read
-    ; mov edi, 0x13FC00 ; where to load kernel into address
-    ; call ata_lba_read
-
-    jmp  codeseg:0x0100000
+    mov eax, 512
+    mov ecx, 255 ; number of sectors to read
+    mov edi, 0x13FC00 ; where to load kernel into address
+    call ata_lba_read
+    jmp codeseg:0x0100000
 
 ; disk driver to read from disk (talking to motherboard to read from disk)
 ata_lba_read:

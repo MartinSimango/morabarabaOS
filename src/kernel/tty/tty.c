@@ -49,7 +49,7 @@ void tty_print_default(const char *s) { tty_print(&DefaultTTY, s); }
 
 void tty_print_int_default(uint32 num) {
   char buf[256];
-  tty_print_default(itoa(num, buf, 256));
+  tty_print_default(itoa(num, buf, 10000));
 }
 
 // todo add error number

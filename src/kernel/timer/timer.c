@@ -1,10 +1,18 @@
 #include "timer.h"
 #include "io.h"
-
+#include "music.h"
+#include "tty.h"
 struct timer timer;
 
 void int20h_timer_handler() {
   timer.tick++;
+  if (music_is_music_playing()) {
+    music_tick();
+    if (music_get_timer() == SIXTEENTH_NOTE) {
+      music_timer_reset();
+      music_load_next_beat();
+    }
+  }
   irq_end_of_interrupt();
 }
 
@@ -30,7 +38,8 @@ void timer_init() {
 void timer_sleep(uint32 time) {
   // uint32 time_to_cut = time/1000.0 *160;
   // time = time - time_to_cut; // cut out some milliseconds due to inaccuaries
-  // with clock in qemu uint64 start = get_timer_count();
+  // // with clock in qemu
+  //  uint64 start = get_timer_count();
 
   // while ((get_timer_count() - start) < time) {
   // }

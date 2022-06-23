@@ -9,6 +9,7 @@
 #include "timer.h"
 #include "sb16.h"
 #include "fpu.h"
+#include "music.h"
 
 // // fixed width integer types
 // typedef unsigned char u8;
@@ -93,47 +94,6 @@
 // }
 
 
- //Play sound using built in speaker
-//  static void play_sound(uint32 nFrequence) {
-//  	uint32 Div;
-//  	uint8 tmp;
- 
-//         //Set the PIT to the desired frequency
-//  	Div = 1193180 / nFrequence;
-//  	outb(0x43, 0xb6);
-//  	outb(0x42, (uint8) (Div) );
-//  	outb(0x42, (uint8) (Div >> 8));
- 
-//         //And play the sound using the PC speaker
-//  	tmp = insb(0x61);
-//   	if (tmp != (tmp | 3)) {
-//  		outb(0x61, tmp | 3);
-//  	}
-//  }
- 
-//  //make it shutup
-//  static void nosound() {
-//  	uint8 tmp = insb(0x61) & 0xFC;
- 
-//  	outb(0x61, tmp);
-//  }
- 
-//  //Make a beep
-//  void beep() {
-//  	 play_sound(1);
-//     timer_sleep(1);
-//      	nosound();
-//     play_sound(440);
-//     timer_sleep(1);
-//      	 nosound();
-
-//  	//  play_sound(440);
-//   //  timer_sleep(250);
-
-//  	//  nosound();
-//           // set_PIT_2(old_frequency);
-//  }
-
 void start_kernel() {
   
  
@@ -147,10 +107,13 @@ void start_kernel() {
     tty_init();
 
 
-
     tty_print_default("martinsimango@customkernel ~ % Hello World!\n");
     sb16_init(); 
     music_init();
+
+    music_play_song(song_get_claire_de_lune, WAVE_SIN, 50);
+    music_loop_single();
+    while(1);
     // sb16_pause_sound();
 
 

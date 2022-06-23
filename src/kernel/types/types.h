@@ -14,6 +14,12 @@ typedef long long int64;
 
 typedef double float64;
 
+typedef uint8 bool;
+
+#define false (0)
+
+#define true (1)
+
 #define NULL ((void *)0)
 
 #define KILOBYTE 1024

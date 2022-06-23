@@ -1,57 +1,85 @@
 #ifndef _MUSIC_H_
 #define _MUSIC_H_
 
-#include "chords.h"
+#include "beat.h"
+#include "io.h"
+#include "song.h"
+#include "song_claire_de_lune.h"
+#include "song_oh_sussana.h"
+#include "tty.h"
 #include "types.h"
 
-#define BPM 120
+typedef Song *(*Song_Func)(uint8, uint8);
 
-#define MSM 60 * 1000.0 // milliseconds in a minute
+extern bool is_music_playing;
 
-#define BEAT_NOTE 4
+extern uint32 music_current_song_beat;
 
-#define SIXTEENTH_NOTE MSM / (BPM * (16.0 / BEAT_NOTE))
-#define EIGTH_NOTE MSM / (BPM * (8.0 / BEAT_NOTE))
-#define QUARTER_NOTE MSM / (BPM * (4.0 / BEAT_NOTE))
-#define HALF_NOTE MSM / (BPM * (2.0 / BEAT_NOTE))
-#define WHOLE_NOTE MSM / (BPM * (1.0 / BEAT_NOTE))
+extern uint32 music_current_song_num_beats;
 
-typedef uint16 NOTE_TYPE;
+extern Beat *music_playing_beat;
 
-typedef struct Beat {
-  Note *notes;
-  uint8 num_notes;
-  NOTE_TYPE duration;           // in ms
-  uint16 duration_left_to_play; // in ms (how much time is left to play for the
-                                // beat)
-} Beat;
+extern uint32 music_timer;
 
-typedef struct Melody {
-  Beat *beats;
-  uint16 beats_length;
-} Melody;
+extern uint8 music_song_index;
 
-typedef struct Song {
-  Melody *melodies;
-} Song;
+extern Song_Func music_song_list[2];
+
+extern uint8 MUSIC_WAVE;
+
+extern uint8 MUSIC_VOLUME;
+
+extern uint8 MUSIC_LOOP_STATE;
+
+#define MUSIC_LOOP_NONE 0
+#define MUSIC_LOOP_SINGLE 1
+#define MUSIC_LOOP_ALL 2
 
 void music_init();
 
-void music_play_chord(Chord c);
-
-void music_play_note(Note note);
+void music_play_beat(Beat beat);
 
 void music_play_melody(Melody melody);
 
-void music_play_song(Song song, uint8 melody_count);
+void music_play_song(Song_Func get_song, uint8 wave, uint8 volume);
+
+void music_play_song_melody(Song song, uint8 melody_count);
 
 float64 music_get_sample(Note note, uint64 sample_rate, uint8 volume,
                          uint16 sample_scale);
 
-Beat music_create_beat_from_note(Note note, NOTE_TYPE note_type);
+static inline bool music_is_music_playing() { return is_music_playing; }
 
-Beat music_create_beat_from_chord(Chord chord, NOTE_TYPE note_type);
+static inline uint32 music_get_current_song_beat() {
+  return music_current_song_beat;
+}
 
-void tranform_beat_to_sixteenth(const Beat *src, Beat *dest);
+static inline void music_tick() { music_timer++; }
+
+static inline void music_timer_reset() { music_timer = 0; }
+
+static inline uint32 music_get_timer() { return music_timer; }
+
+void music_load_next_beat();
+
+void music_pause();
+
+void music_play(uint8 wave, uint8 volume);
+
+void music_stop();
+
+void music_restart_song();
+
+void music_next();
+
+void music_previous();
+
+static inline void music_loop_single() { MUSIC_LOOP_STATE = MUSIC_LOOP_SINGLE; }
+
+static inline void music_loop_all() { MUSIC_LOOP_STATE = MUSIC_LOOP_ALL; }
+
+static inline void music_loop_none() { MUSIC_LOOP_STATE = MUSIC_LOOP_NONE; }
+
+void music_free_playing_beat();
 
 #endif

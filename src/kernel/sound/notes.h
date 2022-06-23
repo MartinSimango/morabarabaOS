@@ -114,8 +114,7 @@ typedef uint8 wave_type;
 
 #define WAVE_SIN 0
 #define WAVE_SQUARE 1
-#define WAVE_NOISE 2
-#define WAVE_TRIANGLE 3
+#define WAVE_TRIANGLE 2
 
 typedef struct Note {
   float64 freq;
@@ -124,6 +123,9 @@ typedef struct Note {
   wave_type wave_type;
   float64 sample_count;
   uint8 volume;
+  bool extended_note;
+  uint8 extended_note_count;
+  uint8 extended_note_index;
 
 } Note;
 

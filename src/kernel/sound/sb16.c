@@ -3,6 +3,7 @@
 #include "io.h"
 #include "math.h"
 #include "memory.h"
+#include "music.h"
 #include "status.h"
 #include "timer.h"
 #include "tty.h"
@@ -66,21 +67,26 @@ void extern int25h_sound();
 
 int16 sb16_sound_buffer[BUFFER_SIZE];
 
-static uint8 bufferflip = 0;
+static bool bufferflip = 0;
 static float64 sample_scale = 10000;
 
 void fill(int16 *buf, uint16 len) {
   for (int i = 0; i < len; i++) {
     float64 val = 0;
-    for (int n = 0; n < sb16_card.notes_length; n++) {
-      // if (i==0){
-      // tty_print_default(" ");
-      // tty_print_int_default(sb16_card.notes[n].freq);
-      // }
-      Note *note = &sb16_card.notes[n];
-      // if(note->volume == 0) {
+    // if(i<1 && new_note_ && has_old_notes) {
+    // for (int n = 0; n < sb16_card.old_notes_length; n++) {
+    //       Note *note = &sb16_card.old_notes[n];
+    //       val += music_get_sample(*note, SAMPLE_RATE, 10, sample_scale);
+    //       // note->sample_count += (1.0 / sample_scale);
+    //       // if (note->sample_count > SAMPLE_RATE / note->freq) {
+    //       //   note->sample_count = 0;
+    //       // }
+    //   }
+    //   new_note_ =false;
+    // }
 
-      //}
+    for (int n = 0; n < sb16_card.notes_length; n++) {
+      Note *note = &sb16_card.notes[n];
       val += music_get_sample(*note, SAMPLE_RATE, note->volume, sample_scale);
       note->sample_count += (1.0 / sample_scale);
       if (note->sample_count > SAMPLE_RATE / note->freq) {
@@ -88,7 +94,7 @@ void fill(int16 *buf, uint16 len) {
       }
     }
 
-    int16 total = (int16)(val * 255);
+    int16 total = (int16)(val * 120);
     buf[i] = total;
   }
 }
@@ -97,11 +103,14 @@ void int25h_sound_handler() {
   bufferflip = !bufferflip;
   fill(&sb16_sound_buffer[bufferflip ? 0 : (BUFFER_SIZE / 2)],
        (BUFFER_SIZE / 2));
+
   insb(DSP_ACK_16);
   irq_end_of_interrupt();
 }
 
 void sb16_init() {
+
+  memset(&sb16_sound_buffer, 0, BUFFER_SIZE);
 
   fill(sb16_sound_buffer, BUFFER_SIZE);
 
@@ -135,9 +144,13 @@ void sb16_init() {
   sb16_DSP_write(high_byte(block_size));
 
   // turn speaker on
-  // does this even need to be there?
-  sb16_DSP_write(DSP_SPEAKER_ON);
-  sb16_DSP_write(DSP_CONTINUE_DMA_16);
+  // // does this even need to be there?
+  // sb16_DSP_write(DSP_SPEAKER_ON);
+
+  // ensure that music is not being played
+  sb16_DSP_write(DSP_PAUSE_DMA_16);
+
+  sb16_card.notes_length = 0;
 }
 
 static uint8 sb16_check_DSP_base_port(uint16 base) {
@@ -166,13 +179,14 @@ void sb16_DSP_reset() {
   for (uint8 i = 0; i < DSP_BASE_PORTS_NUM; i++) {
     error_num = sb16_check_DSP_base_port(DSP_BASE_PORTS[i]);
     if (error_num == 0) {
+      sb16_supported = true;
       return;
     }
   }
 
-  if (error_num < 0) {
-    tty_kernel_panic(error_num * -1);
-  }
+  // if (error_num < 0) {
+  //   // tty_kernel_panic(error_num * -1);
+  // }
 }
 
 void sb16_DSP_write(uint8 byte) {
@@ -228,9 +242,8 @@ void sb16_pause_sound() { sb16_DSP_write(DSP_PAUSE_DMA_16); }
 void sb16_play_sound() { sb16_DSP_write(DSP_CONTINUE_DMA_16); }
 
 void sb16_set_notes(Note *notes, uint8 len) {
-  // memset(sb16_card.notes, 0, sizeof(sb16_card.notes));
+
   sb16_card.notes = notes;
-  // memcpy(sb16_card.notes, notes, len * sizeof(Note));
   sb16_card.notes_length = len;
 }
 
@@ -246,3 +259,7 @@ uint16 sb16_set_samples(int16 *samples, uint16 buffer_len) {
 struct sb16 get_sb16_card() {
   return sb16_card;
 }
+
+bool is_sb16_supported() { return sb16_supported; }
+
+int16 *get_buffer() { return sb16_sound_buffer; }
