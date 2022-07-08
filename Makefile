@@ -77,8 +77,8 @@ iso:
 	dd if=/dev/zero bs=512 count=1000 >> $(IMAGE)
 
 run:
-	qemu-system-i386 -hda $(IMAGE) -device sb16 -soundhw pcspk #-d cpu_reset -monitor stdio -audiodev coreaudio,id=coreaudio,out.frequency=48000,out.channels=2,out.format=s32
-
+	qemu-system-i386 -hda $(IMAGE) -device sb16 -d cpu_reset -monitor stdio -audiodev coreaudio,id=coreaudio,out.frequency=44100,out.channels=2,out.format=s32
+#  -soundhw pcspk 
 all: clean  build run
 
 clean:

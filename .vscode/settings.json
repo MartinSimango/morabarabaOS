@@ -30,6 +30,7 @@
         "speaker.h": "c",
         "song_claire_de_lune.h": "c",
         "song_oh_sussana.h": "c",
-        "fpu.h": "c"
+        "fpu.h": "c",
+        "stdarg.h": "c"
     }
 }

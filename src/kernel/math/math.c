@@ -20,6 +20,7 @@ float64 sin(float64 x) {
   return result;
 }
 
+float64 exp(float64 x) { return pow(E, x); }
 float64 cos(float64 x) { return sin(x + PI / 2.0); }
 
 // black magic

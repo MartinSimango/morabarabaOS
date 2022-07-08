@@ -109,9 +109,12 @@ void start_kernel() {
 
     tty_print_default("martinsimango@customkernel ~ % Hello World!\n");
     sb16_init(); 
-    music_init();
+    music_init();   
 
-    music_play_song(song_get_claire_de_lune, WAVE_SIN, 50);
+
+    music_play_song(song_get_claire_de_lune, WAVE_PIANO_1); 
+
+    music_set_volume(10);
     music_loop_single();
     while(1);
     // sb16_pause_sound();

@@ -1,6 +1,9 @@
 #include "beat.h"
 #include "kheap.h"
 
+uint16 BEAT_BPM = 60;
+uint8 BEAT_NOTE = 4;
+
 Beat beat_from_note(Note note, beat_duration beat_duration) {
   Beat beat;
   beat.notes[0] = note;
@@ -36,16 +39,19 @@ void beats_from_chords(Beat *beats, Chord *chords, uint8 chords_length,
   }
 }
 
-void beat_add_note(Beat *beat, Note note, beat_duration duration, beat_duration duration_left_to_play) {
+void beat_add_note(Beat *beat, Note note, beat_duration duration,
+                   beat_duration duration_left_to_play) {
   if (1 + beat->num_notes > MAX_NOTES_IN_BEAT) {
     return;
   }
   beat->notes[beat->num_notes] = note;
   beat->duration[beat->num_notes] = duration;
   beat->duration_left_to_play[beat->num_notes++] = duration_left_to_play;
-
 }
 
+void beat_add_extended_note(Beat *beat, Note note, beat_duration duration) {
+  beat_add_note(beat,note, duration, duration);
+}
 uint16 beat_max_duration_in_beat(Beat beat) {
   uint16 max_duration = 0;
   for (uint8 i = 0; i < beat.num_notes; i++) {
@@ -66,6 +72,5 @@ uint16 beat_min_duration_in_beat(Beat beat) {
   }
   return min_duration;
 }
-
 
 void free_note_in_beat(Beat beat) { kfree(beat.notes); }

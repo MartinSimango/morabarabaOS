@@ -19,6 +19,8 @@ static struct sb16 {
 } sb16_card;
 
 static bool sb16_supported = false;
+
+extern uint8 MASTER_VOLUME;
 // Possible DSP_BASE_PORT's:
 // 0x220, 0x230, 0x240, 0x250, 0x260 or 0x280
 static const uint16 DSP_BASE_PORTS[] = {0x220, 0x230, 0x240,
@@ -53,10 +55,10 @@ void sb16_set_notes(Note *notes, uint8 len);
 
 uint16 sb16_set_samples(int16 *samples, uint16 buffer_len);
 
-struct sb16 get_sb16_card();
+struct sb16 sb16_get_sb16_card();
 
-bool is_sb16_supported();
+bool sb16_is_sb16_supported();
 
-int16 *get_buffer();
+void sb16_set_master_volume(uint8 volume);
 
 #endif

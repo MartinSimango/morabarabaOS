@@ -1,5 +1,6 @@
 #include "chords.h"
 #include "memory.h"
+#include <stdarg.h>
 
 void chords_init() { scale_init(); }
 
@@ -7,6 +8,35 @@ void chord_init(Chord *chord) { chord->num_of_notes = 0; }
 
 void chord_add_note(Chord *chord, Note note) {
   chord->notes[chord->num_of_notes++] = note;
+}
+
+uint8 align_to_4_bytes(uint8 bytes) {
+  if ((bytes % 4) == 0) {
+    return bytes;
+  }
+  return bytes - (bytes % 4) + 4;
+}
+
+Chord chord_add_notes(Chord *chord, uint8 num_notes, Note note, ...) {
+  chord->notes[0] = note;
+
+  va_list argp;
+  va_start(argp, note);
+  uint8 note_count = 1;
+
+  while (note_count < num_notes) {
+    // please note Size of Note is 24 bytes and int is 4 (on 32 bit systems)
+    // c will mostly likely align arguments to 4 bytes  so 24 bytes is find is
+    // 24%4=0 but if Note increases c will align struct with the size of the
+    // largeset privitve members in struct (largenst member is 4 bytes - 32 bit
+    // system)
+    chord->notes[note_count] = va_arg(argp, Note);
+    note_count++;
+  }
+  chord->num_of_notes = note_count;
+  va_end(argp);
+
+  return *chord;
 }
 
 Chord chord_instance() {

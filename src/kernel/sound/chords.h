@@ -9,9 +9,11 @@
 // IS 12*24+8= 296 BYTES SO MEANING STORE 100 CORDS IS ONLY 29600 BYTES OF
 // MEMORY OR 29 KB
 
+#define MAX_NOTES_IN_CHORD 12
+
 typedef struct Chord {
   uint8 num_of_notes;
-  Note notes[12];
+  Note notes[MAX_NOTES_IN_CHORD];
 } Chord;
 
 void chords_init();
@@ -23,6 +25,8 @@ void chord_init(Chord *chord);
 Chord chord_instance();
 
 void chord_add_note(Chord *chord, Note note);
+
+Chord chord_add_notes(Chord *chord, uint8 num_notes, Note note, ...);
 
 Chord Maj(Note root, uint8 degree);
 

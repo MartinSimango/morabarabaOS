@@ -11,6 +11,7 @@ float64 fabs(float64 x);
 float64 sin(float64 x);
 float64 cos(float64 x);
 float64 pow(float64 x, float64 y);
+float64 exp(float64 x);
 
 uint64 max(uint64 a, uint64 b);
 uint64 min(uint64 a, uint64 b);

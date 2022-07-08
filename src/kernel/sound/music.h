@@ -9,7 +9,7 @@
 #include "tty.h"
 #include "types.h"
 
-typedef Song *(*Song_Func)(uint8, uint8);
+typedef Song *(*Song_Func)();
 
 extern bool is_music_playing;
 
@@ -25,10 +25,6 @@ extern uint8 music_song_index;
 
 extern Song_Func music_song_list[2];
 
-extern uint8 MUSIC_WAVE;
-
-extern uint8 MUSIC_VOLUME;
-
 extern uint8 MUSIC_LOOP_STATE;
 
 #define MUSIC_LOOP_NONE 0
@@ -41,7 +37,7 @@ void music_play_beat(Beat beat);
 
 void music_play_melody(Melody melody);
 
-void music_play_song(Song_Func get_song, uint8 wave, uint8 volume);
+void music_play_song(Song_Func get_song, uint8 wave);
 
 void music_play_song_melody(Song song, uint8 melody_count);
 
@@ -64,7 +60,9 @@ void music_load_next_beat();
 
 void music_pause();
 
-void music_play(uint8 wave, uint8 volume);
+void music_play();
+
+void music_set_volume(uint8 volume);
 
 void music_stop();
 

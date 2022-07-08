@@ -8,7 +8,7 @@ void int20h_timer_handler() {
   timer.tick++;
   if (music_is_music_playing()) {
     music_tick();
-    if (music_get_timer() == SIXTEENTH_NOTE) {
+    if (music_get_timer() == (uint32)(SIXTEENTH_NOTE)) {
       music_timer_reset();
       music_load_next_beat();
     }

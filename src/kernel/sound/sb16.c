@@ -70,21 +70,11 @@ int16 sb16_sound_buffer[BUFFER_SIZE];
 static bool bufferflip = 0;
 static float64 sample_scale = 10000;
 
+uint8 MASTER_VOLUME = 100;
+
 void fill(int16 *buf, uint16 len) {
   for (int i = 0; i < len; i++) {
     float64 val = 0;
-    // if(i<1 && new_note_ && has_old_notes) {
-    // for (int n = 0; n < sb16_card.old_notes_length; n++) {
-    //       Note *note = &sb16_card.old_notes[n];
-    //       val += music_get_sample(*note, SAMPLE_RATE, 10, sample_scale);
-    //       // note->sample_count += (1.0 / sample_scale);
-    //       // if (note->sample_count > SAMPLE_RATE / note->freq) {
-    //       //   note->sample_count = 0;
-    //       // }
-    //   }
-    //   new_note_ =false;
-    // }
-
     for (int n = 0; n < sb16_card.notes_length; n++) {
       Note *note = &sb16_card.notes[n];
       val += music_get_sample(*note, SAMPLE_RATE, note->volume, sample_scale);
@@ -94,7 +84,7 @@ void fill(int16 *buf, uint16 len) {
       }
     }
 
-    int16 total = (int16)(val * 120);
+    int16 total = (int16)(val * MASTER_VOLUME);
     buf[i] = total;
   }
 }
@@ -250,16 +240,14 @@ void sb16_set_notes(Note *notes, uint8 len) {
 uint16 sb16_set_samples(int16 *samples, uint16 buffer_len) {
 
   memset(sb16_card.samples, 0, sizeof(sb16_card.samples));
-  // copy min of buffer_len and buffer
   memcpy(sb16_card.samples, samples, (size_t)min(buffer_len, BUFFER_SIZE));
-
   return min(buffer_len, BUFFER_SIZE);
 }
 
-struct sb16 get_sb16_card() {
+struct sb16 sb16_get_sb16_card() {
   return sb16_card;
 }
 
-bool is_sb16_supported() { return sb16_supported; }
+bool sb16_is_sb16_supported() { return sb16_supported; }
 
-int16 *get_buffer() { return sb16_sound_buffer; }
+void sb16_set_master_volume(uint8 volume) { MASTER_VOLUME = volume; }
