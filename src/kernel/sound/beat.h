@@ -18,10 +18,11 @@ typedef uint16 beat_duration;
 extern uint16 BEAT_BPM;
 extern uint8 BEAT_NOTE;
 
+// Beat is a collection of notes
 typedef struct Beat {
   Note notes[MAX_NOTES_IN_BEAT];
   uint8 num_notes;
-  beat_duration duration[MAX_NOTES_IN_BEAT]; // in ms
+  beat_duration duration[MAX_NOTES_IN_BEAT]; // (how long to play a note) in ms
   beat_duration
       duration_left_to_play[MAX_NOTES_IN_BEAT]; // in ms (how much time is left
                                                 // to play for the beat)

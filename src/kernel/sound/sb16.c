@@ -5,8 +5,9 @@
 #include "memory.h"
 #include "music.h"
 #include "status.h"
+#include "terminal.h"
 #include "timer.h"
-#include "tty.h"
+#include "print.h"
 
 #define DSP_RESET 0x06
 #define DSP_DATAAVAIL 0x0E
@@ -106,8 +107,16 @@ void sb16_init() {
 
   // reset DSP
   sb16_DSP_reset();
+  if (sb16_is_sb16_supported()) {
+    terminal_print_default("\nSound blaster 16 sound card is present!\n");
+    printk("\nSound blaster 16 sound card is present!\n");
+  } else {
+     terminal_print_default("\nSound blaster 16 sound card is NOT present!\n");
+     printk("\nSound blaster 16 sound card is NOT present!\n");
+  }
 
-  tty_print_default("\nSound blaster 16 sound card is present!\n");
+  
+
 
   // SET IRQ
   outb(DSP_MIXER_PORT, DSP_SET_IRQ);
@@ -174,9 +183,9 @@ void sb16_DSP_reset() {
     }
   }
 
-  // if (error_num < 0) {
-  //   // tty_kernel_panic(error_num * -1);
-  // }
+  if (error_num < 0) {
+    // tty_kernel_panic(error_num * -1);
+  }
 }
 
 void sb16_DSP_write(uint8 byte) {
@@ -231,6 +240,7 @@ void sb16_pause_sound() { sb16_DSP_write(DSP_PAUSE_DMA_16); }
 
 void sb16_play_sound() { sb16_DSP_write(DSP_CONTINUE_DMA_16); }
 
+// sb16_set_notes sets the notes to be played
 void sb16_set_notes(Note *notes, uint8 len) {
 
   sb16_card.notes = notes;

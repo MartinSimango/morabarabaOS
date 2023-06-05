@@ -106,28 +106,28 @@ Beat *music_combine_melodies_from_song(Song song, uint16 num_of_beats) {
             uint16 ticks =
                 (duration_left_to_play - SIXTEENTH_NOTE) / (SIXTEENTH_NOTE);
 
-            if(ticks == 0 ) {
+            if (ticks == 0) {
               continue;
             }
-            // tty_print_default(" Ticks: ");
+            // terminal_print_default(" Ticks: ");
             // tty_print_int_default(ticks);
-            // tty_print_default(" END \n");
+            // terminal_print_default(" END \n");
 
             Note no = song.melodies[j]->beats[k].notes[n];
 
-             no.extended_note = true;
-              // uint16 d =
-              //     duration_left_to_play - SIXTEENTH_NOTE - ((k)*SIXTEENTH_NOTE);
-              no.extended_note_index = note_num;
-              beat_add_note(&combined_beats[beat_count + 1], no, 0, 0);
+            no.extended_note = true;
+            // uint16 d =
+            //     duration_left_to_play - SIXTEENTH_NOTE -
+            //     ((k)*SIXTEENTH_NOTE);
+            no.extended_note_index = note_num;
+            beat_add_note(&combined_beats[beat_count + 1], no, 0, 0);
 
             for (uint16 h = 1; h < ticks; h++) {
               no.extended_note = true;
               no.extended_note_index =
-                  combined_beats[beat_count + h].num_notes-1;
-              beat_add_note(&combined_beats[beat_count+h+1], no, 0, 0);
+                  combined_beats[beat_count + h].num_notes - 1;
+              beat_add_note(&combined_beats[beat_count + h + 1], no, 0, 0);
             }
-
           }
         }
         beat_count++; // new beat added
@@ -184,14 +184,10 @@ float64 music_get_sample(Note note, uint64 sample_rate, uint8 volume,
     return ((4 * volume) / p) * fabs((mod)-p / 2) - volume;
   }
   case WAVE_PIANO_1: {
-    float64 val =
-           (sin(PI * sample * freq) * sin(PI * sample * freq) *
-                sin(PI * sample * freq) +
-            sin(PI * (sample * freq +
-                      2 / 3))); 
-    val += sin(2  * PI * freq * sample) +
-           sin(PI * (sample * freq +
-                      2 / 3)) / 2;
+    float64 val = (sin(PI * sample * freq) * sin(PI * sample * freq) *
+                       sin(PI * sample * freq) +
+                   sin(PI * (sample * freq + 2 / 3)));
+    val += sin(2 * PI * freq * sample) + sin(PI * (sample * freq + 2 / 3)) / 2;
     // val += sin(3  * PI * freq * sample) +
     //        sin(PI * (sample * freq +
     //                   2 / 3)) / 4;
@@ -204,10 +200,9 @@ float64 music_get_sample(Note note, uint64 sample_rate, uint8 volume,
     // val += sin(6  * PI * freq * sample) +
     //        sin(PI * (sample * freq +
     //                   2 / 3))/ 32;
-      return val * volume ;
+    return val * volume;
   }
 
-                  
   case WAVE_PIANO_2: {
     float64 val = 0.6 * sin(2 * PI * freq * sample) *
                   exp(-0.0004 * 2 * PI * freq * sample);
@@ -235,7 +230,7 @@ void music_play_single_beat(Beat *beat_playing) {
     sb16_set_notes(beat_playing->notes, beat_playing->num_notes);
     return;
   }
-
+  
   if (beat_playing->notes[0].freq != 0) {
     speaker_play_sound(beat_playing->notes[0].freq);
   }
@@ -251,13 +246,13 @@ void music_update_sample_count_of_notes(Beat *beat_playing) {
       // tty_print_int_default(sb16_get_sb16_card()
       //         .notes[beat_playing->notes[i].extended_note_index]
       //         .freq);
-      // tty_print_default(" B: ");
+      // terminal_print_default(" B: ");
       // tty_print_int_default(music_current_song_beat);
-      //       tty_print_default("\n");
+      //       terminal_print_default("\n");
 
-    }
-    else if ((beat_playing->duration_left_to_play[i] < beat_playing->duration[i]) &&
-        beat_playing->duration_left_to_play > 0) {
+    } else if ((beat_playing->duration_left_to_play[i] <
+                beat_playing->duration[i]) &&
+               beat_playing->duration_left_to_play > 0) {
       beat_playing->notes[i].sample_count =
           sb16_get_sb16_card().notes[i].sample_count;
     }

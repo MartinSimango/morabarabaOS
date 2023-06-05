@@ -6,12 +6,13 @@
 #define CLI() asm("cli")
 #define STI() asm("sti")
 
-uint8 insb(uint16 port);
-uint16 insw(uint16 port);
+//  ASM defined functions
+extern uint8 insb(uint16 port);
+extern uint16 insw(uint16 port);
 
-void outb(uint16 port, uint8 value);
+extern void outb(uint16 port, uint8 value);
 
-void outw(uint16 port, uint16 value);
+extern void outw(uint16 port, uint16 value);
 
 static inline uint8 low_byte(uint16 value) { return (uint8)(value & 0xFF); }
 
@@ -22,6 +23,12 @@ static inline uint8 high_byte(uint16 value) {
 static void inline enable_interrupts() { STI(); }
 
 static void inline disable_interrupts() { CLI(); }
+
+// Wait a very small amount of time (1 to 4 microseconds, generally)
+static inline void io_wait(void) 
+{
+    outb(0x80, 0);
+}
 
 // #define asm __asm__ volatile
 

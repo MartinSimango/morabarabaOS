@@ -1,7 +1,7 @@
 #include "heap.h"
 #include "memory.h"
 #include "status.h"
-#include "tty.h"
+// #include "terminal.h"
 
 static int heap_validate_heap_table(void *start, void *end,
                                     struct heap_table *table) {
@@ -38,7 +38,7 @@ int heap_create(struct heap *heap, void *start, void *end,
   }
 
   size_t table_size = sizeof(HEAP_BLOCK_TABLE_ENTRY) * table->total_entries;
-  // intialize all heap table entries to be FREE (0x00)
+  // initialize all heap table entries to be FREE (0x00)
   memset(table->entries, HEAP_BLOCK_TABLE_ENTRY_FREE, table_size);
   return 0;
 }
@@ -47,12 +47,11 @@ static uint32 heap_align_value_to_upper(uint32 block_size) {
   if ((block_size % KERNEL_HEAP_BLOCK_SIZE) == 0) {
     return block_size;
   }
-  return block_size - (block_size % KERNEL_HEAP_BLOCK_SIZE) +
-         KERNEL_HEAP_BLOCK_SIZE;
+  return block_size + KERNEL_HEAP_BLOCK_SIZE - (block_size % KERNEL_HEAP_BLOCK_SIZE);
 }
 
 static uint8 heap_get_entry_type(HEAP_BLOCK_TABLE_ENTRY entry) {
-  return entry & 0x0f;
+  return entry & 0x0f; // get the lower 4 bits of the heap entry which is the entry type
 }
 
 static uint32 heap_get_start_block(struct heap *heap, uint32 total_blocks) {
@@ -105,7 +104,7 @@ void heap_mark_blocks_taken(struct heap_table *table, uint32 start_block,
 void *heap_malloc_block(struct heap *heap, uint32 blocks) {
   uint32 start_block = heap_get_start_block(heap, blocks);
   if (start_block < 0) {
-    tty_kernel_panic(start_block);
+    // terminal_kernel_panic(start_block);
   }
 
   heap_mark_blocks_taken(heap->table, start_block, blocks);
@@ -157,7 +156,7 @@ void *heap_free(struct heap *heap, void *ptr) {
 
   int start_block = heap_address_to_block(heap, ptr);
   if (start_block < 0) {
-    tty_kernel_panic(start_block);
+    // terminal_kernel_panic(start_block);
   }
 
   heap_mark_blocks_free(heap, start_block);

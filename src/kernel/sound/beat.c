@@ -1,7 +1,7 @@
 #include "beat.h"
 #include "kheap.h"
 
-uint16 BEAT_BPM = 60;
+uint16 BEAT_BPM = 120;
 uint8 BEAT_NOTE = 4;
 
 Beat beat_from_note(Note note, beat_duration beat_duration) {
@@ -50,7 +50,7 @@ void beat_add_note(Beat *beat, Note note, beat_duration duration,
 }
 
 void beat_add_extended_note(Beat *beat, Note note, beat_duration duration) {
-  beat_add_note(beat,note, duration, duration);
+  beat_add_note(beat, note, duration, duration);
 }
 uint16 beat_max_duration_in_beat(Beat beat) {
   uint16 max_duration = 0;

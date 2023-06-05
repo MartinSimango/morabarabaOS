@@ -1,6 +1,6 @@
 ##### x86_64 VM related #####
 
-x86_64_VM_NAME:= gdb
+x86_64_VM_NAME:= gdb_x86_64
 x86_64_VM_SHELL:= limactl shell $(x86_64_VM_NAME)
 
 
@@ -37,7 +37,7 @@ INCLUDE_DIRS:=$(patsubst %, -I %, $(MODULES))
 
 C_OBJECT_FILES:=$(patsubst %.c, $(OBJ)/%.o, $(SOURCE_FILES_IN_MODULES))
 
-ASM_OBJECT_FILES:=$(OBJ)/kernel.asm.o $(OBJ)/idt.asm.o $(OBJ)/io.asm.o 
+ASM_OBJECT_FILES:=$(OBJ)/idt.asm.o $(OBJ)/io.asm.o $(OBJ)/kernel.asm.o 
 
 ALL_OBJECT_FILES:=$(ASM_OBJECT_FILES) $(C_OBJECT_FILES) $(OBJ)/kernel.o 
 
@@ -77,8 +77,18 @@ iso:
 	dd if=/dev/zero bs=512 count=1000 >> $(IMAGE)
 
 run:
-	qemu-system-i386 -hda $(IMAGE) -device sb16 -d cpu_reset -monitor stdio -audiodev coreaudio,id=coreaudio,out.frequency=44100,out.channels=2,out.format=s32
+	qemu-system-i386 -hda $(IMAGE)  -device sb16 -d cpu_reset -monitor stdio -audiodev coreaudio,id=coreaudio,out.frequency=44100,out.channels=2,out.format=s32
 #  -soundhw pcspk 
+
+write-usb: clean build
+	# sudo umount /dev/disk4
+	sudo dd if=$(IMAGE) bs=512 of=/dev/disk4
+
+
+run-usb: 
+	sudo qemu-system-x86_64 -hda /dev/disk4  -device sb16 -d cpu_reset -monitor stdio -audiodev coreaudio,id=coreaudio,out.frequency=44100,out.channels=2,out.format=s32
+
+
 all: clean  build run
 
 clean:
@@ -88,7 +98,7 @@ clean:
 
 view:
 	xxd $(IMAGE)
-
+# 317017
 
 ########### DEBUGGING ###########
 

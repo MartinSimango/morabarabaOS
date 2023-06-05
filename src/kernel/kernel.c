@@ -1,5 +1,5 @@
 #include "screen.h"
-#include "tty.h"
+#include "console.h"
 #include "idt.h"
 #include "font.h"
 #include "io.h"
@@ -10,6 +10,13 @@
 #include "sb16.h"
 #include "fpu.h"
 #include "music.h"
+#include "tty.h"
+#include "vc.h"
+#include "print.h"
+#include "terminal.h"
+
+
+struct vc vc_consoles[2];
 
 // // fixed width integer types
 // typedef unsigned char u8;
@@ -95,24 +102,25 @@
 
 
 void start_kernel() {
-  
- 
     kheap_init();
+    console_init();
+
     idt_init();
     irq_init();
     timer_init();
     fpu_init();
     enable_interrupts();
+    terminal_init();
+    printk("Hello World!");
 
-    tty_init();
 
 
-    tty_print_default("martinsimango@customkernel ~ % Hello World!\n");
+    terminal_print_default("martinsimango@customkernel ~ % Hello World!\n");
     sb16_init(); 
     music_init();   
 
 
-    music_play_song(song_get_claire_de_lune, WAVE_PIANO_1); 
+    music_play_song(song_get_oh_sussana, WAVE_TRIANGLE); 
 
     music_set_volume(10);
     music_loop_single();

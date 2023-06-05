@@ -67,8 +67,7 @@ static inline Melody *song_claire_de_lune_melody_1() {
   beat_add_extended_note(&beat, Af4, QUARTER_NOTE);
   melody_add_beat(melody, beat);
 
-
-// dasd
+  // dasd
   beat = beat_from_note(RST, EIGTH_NOTE);
   beat_add_extended_note(&beat, Ef4, DOTTED_NOTE(HALF_NOTE));
   melody_add_beat(melody, beat);
@@ -77,15 +76,13 @@ static inline Melody *song_claire_de_lune_melody_1() {
   melody_add_beat(melody, beat_from_note(Af4, EIGTH_NOTE));
   melody_add_beat(melody, beat_from_note(Gf4, DOTTED_NOTE(QUARTER_NOTE)));
 
-
   beat = beat_from_note(Ef4, DOTTED_NOTE(QUARTER_NOTE));
   beat_add_extended_note(&beat, F4, DOTTED_NOTE(QUARTER_NOTE) + EIGTH_NOTE);
   melody_add_beat(melody, beat);
 
-
-
   beat = beat_from_note(RST, EIGTH_NOTE);
-  beat_add_extended_note(&beat, Df4, DOTTED_NOTE(HALF_NOTE) + DOTTED_NOTE(QUARTER_NOTE));
+  beat_add_extended_note(&beat, Df4,
+                         DOTTED_NOTE(HALF_NOTE) + DOTTED_NOTE(QUARTER_NOTE));
   melody_add_beat(melody, beat);
 
   melody_add_beat(melody, beat_from_note(F4, EIGTH_NOTE));
@@ -98,13 +95,10 @@ static inline Melody *song_claire_de_lune_melody_1() {
   melody_add_beat(melody, beat_from_note(Ef4, EIGTH_NOTE));
   melody_add_beat(melody, beat_from_note(F4, EIGTH_NOTE));
 
-
   beat = beat_from_note(RST, EIGTH_NOTE);
   beat_add_extended_note(&beat, Ef4, EIGTH_NOTE);
   melody_add_beat(melody, beat);
 
-
-    
   beat = beat_from_note(RST, EIGTH_NOTE);
   beat_add_extended_note(&beat, Bf3, DOTTED_NOTE(HALF_NOTE));
   melody_add_beat(melody, beat);
@@ -117,13 +111,12 @@ static inline Melody *song_claire_de_lune_melody_1() {
   melody_add_beat(melody, beat_from_chord(chord_add_notes(&chord, 2, Af3, C4),
                                           DOTTED_NOTE(QUARTER_NOTE)));
 
-  melody_add_beat(melody, beat_from_note(RST, 2*EIGTH_NOTE));
-  
+  melody_add_beat(melody, beat_from_note(RST, 2 * EIGTH_NOTE));
+
   melody_add_beat(melody, beat_from_chord(chord_add_notes(&chord, 2, F5, Af5),
                                           DOTTED_NOTE(QUARTER_NOTE)));
   melody_add_beat(melody, beat_from_chord(chord_add_notes(&chord, 2, Df5, F5),
                                           DOTTED_NOTE(QUARTER_NOTE)));
-
 
   return melody;
 }
@@ -153,16 +146,16 @@ static inline Melody *song_claire_de_lune_melody_2() {
   melody_add_beat(melody, beat_from_chord(chord_add_notes(&chord, 2, C4, Ef4),
                                           DOTTED_NOTE(QUARTER_NOTE)));
 
-  //dasd
+  // dasd
   melody_add_beat(melody, beat_from_chord(chord_add_notes(&chord, 2, Bf3, Df4),
                                           DOTTED_NOTE(HALF_NOTE)));
 
   melody_add_beat(melody, beat_from_chord(chord_add_notes(&chord, 2, A3, C4),
                                           DOTTED_NOTE(QUARTER_NOTE)));
 
-
   beat = beat_from_note(Af3, DOTTED_NOTE(HALF_NOTE));
-  beat_add_extended_note(&beat, Bf3, DOTTED_NOTE(HALF_NOTE) + DOTTED_NOTE(QUARTER_NOTE));
+  beat_add_extended_note(&beat, Bf3,
+                         DOTTED_NOTE(HALF_NOTE) + DOTTED_NOTE(QUARTER_NOTE));
   melody_add_beat(melody, beat);
 
   melody_add_beat(melody, beat_from_note(Gf3, DOTTED_NOTE(QUARTER_NOTE)));
@@ -173,26 +166,20 @@ static inline Melody *song_claire_de_lune_melody_2() {
   beat = beat_from_note(Ef3, EIGTH_NOTE);
   beat_add_extended_note(&beat, Gf3, DOTTED_NOTE(QUARTER_NOTE));
   melody_add_beat(melody, beat);
-  
 
   beat = beat_from_note(RST, EIGTH_NOTE);
   beat_add_extended_note(&beat, Af2, EIGTH_NOTE + EIGTH_NOTE);
   melody_add_beat(melody, beat);
 
-
   beat = beat_from_note(RST, EIGTH_NOTE);
-  beat_add_extended_note(&beat, Df2, 3*EIGTH_NOTE);
+  beat_add_extended_note(&beat, Df2, 3 * EIGTH_NOTE);
   melody_add_beat(melody, beat);
 
-
-  melody_add_beat(melody, beat_from_chord(chord_add_notes(&chord, 2, Af3, F3),
-                                          EIGTH_NOTE));
-  
+  melody_add_beat(
+      melody, beat_from_chord(chord_add_notes(&chord, 2, Af3, F3), EIGTH_NOTE));
 
   melody_add_beat(melody, beat_from_chord(chord_add_notes(&chord, 2, F4, Af4),
                                           EIGTH_NOTE + DOTTED_NOTE(HALF_NOTE)));
-
-
 
   return melody;
 }

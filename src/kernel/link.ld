@@ -18,32 +18,32 @@ OUTPUT(
 SECTIONS
 {
 
-    . = 1M;
+    . = 0x100000;/* 1M;  /* where kernel will be loaded to (0x100000) */
 
-    .text : ALIGN(0x1000)
+    .text BLOCK(4K) : ALIGN(0x1000)
     {
-        /* *(.text.prologue) */
+        *(.text.prologue)
         *(.text)
     }
 
-    .rodata : ALIGN(0x1000)
+    .rodata BLOCK(4K) : ALIGN(0x1000)
     {
         *(.rodata)
     }
 
-    .data : ALIGN(0x1000)
+    .data BLOCK(4K) : ALIGN(0x1000)
     {
         *(.data)
     }
 
-    .bss : ALIGN(0x1000)
+    .bss BLOCK(4K) : ALIGN(0x1000)
     {
         *(COMMON)
         *(.bss)
         
     }
 
-    .asm : ALIGN(0x1000){
+    .asm BLOCK(4K) : ALIGN(0x1000){
         *(.asm)
     }
 

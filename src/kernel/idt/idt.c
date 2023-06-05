@@ -50,7 +50,7 @@ void idt_init() {
   // idt_set(0, idt_zero);
 
   idt_set(0x20, int20h_timer);
-  irq_clear_mask(5);
+  irq_clear_mask(5); // ensures interrupts from sound drivers come through
   idt_set(0x25, int25h_sound);
 
   idt_load(&idtr_descriptor);

@@ -2,19 +2,18 @@
 [ORG 0x7c00]
 
 
-; TODO find out why this doesn't effect size of program
 PROGRAM_SPACE equ 0x7e00; 512 bytes after first sector
 
 
 
 main:
-    JMP short start
+ ; 2 lines are necessary for bios parameter block to be at 0x3
+    JMP short _start_2 
     NOP
-
   
 ; this sector needs to start at an offset of 0x3 bytes from the start of the program
 boot_sector:
-    BPB:                                   ; boot paramter block
+    BPB:                                   ; boot paramter block (25 bytes)
         iOEM            db "DevOS   "      ; OEM [8 bytes]
         iSectSize       dw 0x200           ; bytes per sector [2 bytes]
         iClustSize      db 1               ; sectors per cluster [1 bytes]
@@ -26,7 +25,7 @@ boot_sector:
         iFatSize        dw 9               ; size of each FAT. Number of sectors per FAT [2 bytes]
         iTrackSect      dw 9               ; sectors per track [2 bytes]
         iHeadCnt        dw 2               ; number of read-write heads [2 bytes]
-    EBPB:                                  ; extended BPB
+    EBPB:                                  ; extended BPB (32 bytes)
         iHiddenSect     dw  0              ; number of hidden sectors [2 bytes]
         iSect32         dd  0                ; number of sectors for number in filesystem [4 bytes]
         iBootDrive      db  0               ; holds drive that the boot sector came from [1 byte]
@@ -36,25 +35,25 @@ boot_sector:
         acVolumeLabel   db  "Martin     "   ; volume label [11 bytes]
         acFSType        db  "FAT16   "      ; file system type [8 bytes]
 
-
+_start_2: 
+    jmp 0:start
 ; define real mode data segments
 start:
     cli                  ; Turn off interrupts
-    mov  [iBootDrive], dl  ; save what drive we booted from (should be 0x0)
+    mov  [iBootDrive], dl  ; save what drive we booted from (drive is stored in dl)
     mov  ax, 0x00  
     mov  ds, ax          ; DS = CS = 0x0
     mov  es, ax          ; ES = CS = 0x0
     mov  ss, ax          ; SS = CS = 0x0 
-    mov bp, 0x7c00      ;  Stack grows down from offset 0x7C00 toward 0x0000. decimal=  31744
-    mov sp, bp
+    ; mov bp, 0x7c00      ;  Stack grows down from offset 0x7C00 toward 0x0000. decimal=  31744
+    mov sp, 0x7c00 
     sti                  ; Enable interrupts
-
     mov si, LoadingMessage
     call print_string
 
 ; prepare drive for use by resetting it
 reset_drive:              
-  mov  dl, [iBootDrive]   ; drive to reset 
+;   mov  dl, [iBootDrive]   ; drive to reset 
   xor  ax, ax             ; subfunction 0 (mov ax, 0) use xor instead of mov to use less bytes as xor instruction uses less bytes
   int  0x13               ; call interrupt 13h
   jc   boot_failure        ; display error message if carry set (error)

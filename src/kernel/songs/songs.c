@@ -2,6 +2,7 @@
 #include "song_oh_sussana.h"
 
 Song *song_get_oh_sussana() {
+  beat_set_bpm(200);
   Song *song = kmalloc(sizeof(Song));
   song->melodies[0] = song_get_oh_sussana_melody_1();
   song->melodies[1] = song_get_oh_sussana_melody_2();

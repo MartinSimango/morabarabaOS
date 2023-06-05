@@ -1,5 +1,9 @@
 #include "irq.h"
 #include "io.h"
+#include "print.h"
+#include "types.h"
+
+// code from https://wiki.osdev.org/8259_PIC
 
 #define PIC1 0x20 /* IO base address for master PIC */
 #define PIC1_OFFSET 0x20
@@ -23,30 +27,49 @@
 #define ICW4_BUF_MASTER 0x0C /* Buffered mode/master */
 #define ICW4_SFNM 0x10       /* Special fully nested (not) */
 
+
+/*
+This command makes the PIC wait for 3 extra "initialisation words" on the data port. These bytes give the PIC:
+
+1. Its vector offset. (ICW2)
+2. Tell it how it is wired to master/slaves. (ICW3)
+3. Gives additional information about the environment. (ICW4)
+*/
+
 void remap_pic() {
 
   uint8 mask_1 = insb(PIC1_DATA); // save masks
   uint8 mask_2 = insb(PIC2_DATA);
+  char buf[256];
 
-  outb(PIC1_COMMAND,
-       ICW1_INIT |
-           ICW1_ICW4); // starts the initialization sequence (in cascade mode)
-  outb(PIC2_COMMAND, ICW1_INIT | ICW1_ICW4);
+
+
+  outb(PIC1_COMMAND,ICW1_INIT | ICW1_ICW4); // starts the initialization sequence (in cascade mode)
   outb(PIC1_DATA, PIC1_OFFSET); // ICW2: Master PIC vector offset
-  outb(PIC2_DATA, PIC2_OFFSET); // ICW2: Slave PIC vector offset
   // ICW3: tell Master PIC that there is a slave PIC at IRQ2 (0000 0100)
   outb(PIC1_DATA, 4);
-  outb(PIC2_DATA, 2); // ICW3: tell Slave PIC its cascade identity (0000 0010)
+  outb(PIC1_DATA, ICW4_8086); // ICW4: have the PICs use 8086 mode (and not 8080 mode) 
 
-  outb(PIC1_DATA, ICW4_8086);
-  outb(PIC2_DATA, ICW4_8086);
+
+  outb(PIC2_COMMAND, ICW1_INIT | ICW1_ICW4);
+  outb(PIC2_DATA, PIC2_OFFSET); // ICW2: Slave PIC vector offset
+  outb(PIC2_DATA, 2); // ICW3: tell Slave PIC its cascade identity (0000 0010)
+  outb(PIC2_DATA, ICW4_8086); // ICW4: have the PICs use 8086 mode (and not 8080 mode) 
+
 
   outb(PIC1_DATA, mask_1); // restore saved masks.
   outb(PIC2_DATA, mask_2);
 }
 
-void irq_init() { remap_pic(); }
+void irq_init() {  remap_pic(); }
 
+/*
+The PIC has an internal register called the IMR, or the Interrupt Mask Register. 
+It is 8 bits wide. This register is a bitmap of the request lines going into the PIC. 
+When a bit is set, the PIC ignores the request and continues normal operation.
+ Note that setting the mask on a higher request line will not affect a lower line. 
+Masking IRQ2 will cause the Slave PIC to stop raising IRQs.
+*/
 void irq_clear_mask(uint8 IRQline) {
   uint16 port;
   uint8 value;
@@ -62,3 +85,11 @@ void irq_clear_mask(uint8 IRQline) {
 }
 
 void irq_end_of_interrupt() { outb(PIC1, PIC_EOI); }
+
+// void PIC_sendEOI(unsigned char irq)
+// {
+// 	if(irq >= 8)
+// 		outb(PIC2_COMMAND,PIC_EOI);
+ 
+// 	outb(PIC1_COMMAND,PIC_EOI);
+// }

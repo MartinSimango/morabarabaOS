@@ -5,6 +5,8 @@
 
 #define MAX_BEATS_IN_MELODY 1000
 
+// Melody is simply a collection of Beats (which are contain details of how long
+// a note is played)
 typedef struct Melody {
   Beat *beats;
   uint16 beats_length;

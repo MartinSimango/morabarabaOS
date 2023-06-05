@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Fri Jul  8 18:17:54 2022
+# Make data base, printed on Thu Aug 11 09:56:21 2022
 
 # Variables
 
@@ -20,8 +20,6 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 OBJ = obj
 # makefile (from `Makefile', line 4)
 x86_64_VM_SHELL := limactl shell gdb
-# environment
-VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -49,15 +47,11 @@ GCC := i686-unknown-linux-gnu-gcc
 # makefile (from `Makefile', line 112)
 NPM := /usr/local/bin/npm
 # environment
-VSCODE_VERBOSE_LOGGING = true
-# environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
 INFOPATH = /opt/homebrew/share/info:
 # makefile (from `Makefile', line 28)
 ALL_SOURCE_FILES := src/kernel/fonts/font.c src/kernel/fpu/fpu.c src/kernel/graphics/screen.c src/kernel/idt/idt.c src/kernel/irq/irq.c src/kernel/math/math.c src/kernel/memory/heap.c src/kernel/memory/kheap.c src/kernel/memory/memory.c src/kernel/songs/songs.c src/kernel/sound/beat.c src/kernel/sound/chords.c src/kernel/sound/melody.c src/kernel/sound/music.c src/kernel/sound/notes.c src/kernel/sound/sb16.c src/kernel/sound/scale.c src/kernel/sound/sound.c src/kernel/string/string.c src/kernel/timer/timer.c src/kernel/tty/tty.c
-# environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/cb/szvng6m95dq08_z37f7h6wnc0000gn/T/vscode-ipc-2b2017aa-3dbe-4c62-831f-9fc02794e91f.sock
 # environment
 VSCODE_CWD = /
 # makefile (from `Makefile', line 36)
@@ -65,41 +59,34 @@ INCLUDE_DIRS :=  -I src/kernel/  -I src/kernel/fonts/  -I src/kernel/fpu/  -I sr
 # makefile (from `Makefile', line 30)
 SOURCE_FILES_IN_MODULES :=  obj/fonts/font.o  obj/fpu/fpu.o  obj/graphics/screen.o  obj/idt/idt.o  obj/irq/irq.o  obj/math/math.o  obj/memory/heap.o  obj/memory/kheap.o  obj/memory/memory.o  obj/songs/songs.o  obj/sound/beat.o  obj/sound/chords.o  obj/sound/melody.o  obj/sound/music.o  obj/sound/notes.o  obj/sound/sb16.o  obj/sound/scale.o  obj/sound/sound.o  obj/string/string.o  obj/timer/timer.o  obj/tty/tty.o
 # environment
-PATH = /Users/martinsimango/.sdkman/candidates/java/current/bin:/Users/martinsimango/.kubectl-plugin-completion/:/Users/martinsimango/.krew/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Library/Apple/usr/bin:/bin:/Users/martinsimango/go/bin:/opt/homebrew/bin:/opt/homebrew/opt/x86_64-unknown-linux-gnu/bin:/opt/homebrew/opt/aarch64-unknown-linux-gnu/bin:/opt/homebrew/opt/i686-unknown-linux-gnu/bin:/opt/homebrew/opt/i686-unknown-linux-gnu/toolchain/bin
+PATH = /Users/martinsimango/.krew/bin/:/Users/martinsimango/bin:/usr/local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/opt/X11/bin:/Library/Apple/usr/bin:/bin:/Users/martinsimango/go/bin:/opt/homebrew/bin:/opt/homebrew/opt/x86_64-unknown-linux-gnu/bin:/opt/homebrew/opt/aarch64-unknown-linux-gnu/bin:/opt/homebrew/opt/i686-unknown-linux-gnu/bin:/opt/homebrew/opt/i686-unknown-linux-gnu/toolchain/bin
 # makefile (from `Makefile', line 10)
 LD := i686-unknown-linux-gnu-ld  
 # environment
-SDKMAN_DIR = /Users/martinsimango/.sdkman
-# environment
-SDKMAN_CANDIDATES_API = https://api.sdkman.io/2
+LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
 GOPATH = /Users/martinsimango/go
 # makefile (from `Makefile', line 34)
 MODULES_OBJECT_DIR :=  obj/  obj/fonts/  obj/fpu/  obj/graphics/  obj/idt/  obj/io/  obj/irq/  obj/math/  obj/memory/  obj/songs/  obj/sound/  obj/status/  obj/string/  obj/timer/  obj/tty/  obj/types/
 # environment
-LaunchInstanceID = 052729A8-0594-433E-A7F2-FC18B758B3A4
-# environment
-SDKMAN_PLATFORM = darwinx64
-# environment
-VSCODE_LOG_STACK = false
-# environment
 ELECTRON_RUN_AS_NODE = 1
+ 
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # makefile (from `Makefile', line 33)
 MODULES := src/kernel/ src/kernel/fonts/ src/kernel/fpu/ src/kernel/graphics/ src/kernel/idt/ src/kernel/io/ src/kernel/irq/ src/kernel/math/ src/kernel/memory/ src/kernel/songs/ src/kernel/sound/ src/kernel/status/ src/kernel/string/ src/kernel/timer/ src/kernel/tty/ src/kernel/types/
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.E1SoDcvkQW/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.uV4UtdN5sz/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
 GOBIN = /Users/martinsimango/go/bin
+# environment
+DISPLAY = /private/tmp/com.apple.launchd.UahvpwGVeY/org.xquartz:0
 # makefile (from `Makefile', line 113)
 CLANG_FORMAT := /usr/local/bin/clang-format
 # makefile (from `Makefile', line 22)
 IMAGE = kernel.iso
-# environment
-VSCODE_PIPE_LOGGING = true
 # environment
 PWD = /Users/martinsimango/projects/morabarabaOS
 # environment
@@ -117,27 +104,25 @@ ALL_HEADER_FILES := src/kernel/fonts/SFMonoBold.h src/kernel/fonts/SFMonoRegular
 # default
 MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/martinsimango/Library/Application Support/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
+VSCODE_CODE_CACHE_PATH = /Users/martinsimango/Library/Application Support/Code/CachedData/b06ae3b2d2dbfe28bca3134cc6be65935cdfea6a
 # environment
 LOGNAME = martinsimango
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+ZSH = /Users/martinsimango/.oh-my-zsh
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
 XPC_FLAGS = 0x0
-# environment
-SDKMAN_VERSION = 5.13.1
 # default
 MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # environment
 SHLVL = 1
-# environment
-JAVA_HOME = /Users/martinsimango/.sdkman/candidates/java/current
 # default
 MAKE_VERSION := 3.81
 # environment
@@ -146,6 +131,8 @@ USER = martinsimango
 .DEFAULT_GOAL := obj/
 # makefile (from `Makefile', line 24)
 START_DEBUG := qemu-system-i386 -hda kernel.iso  -S -s 
+# environment
+LESS = -R
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # makefile (from `Makefile', line 40)
@@ -159,7 +146,9 @@ TMPDIR = /var/folders/cb/szvng6m95dq08_z37f7h6wnc0000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/martinsimango/Library/Application Support/Code/1.68.1-main.sock
+VSCODE_IPC_HOOK = /Users/martinsimango/Library/Application Support/Code/1.69.1-main.sock
+# environment
+MallocNanoZone = 0
 # makefile
 MAKEFLAGS = Rrqp
 # environment
@@ -167,7 +156,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.32681296.32681302
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.34071831.34071837
 # environment
 HOMEBREW_PREFIX = /opt/homebrew
 # automatic
@@ -184,19 +173,16 @@ COMMAND_MODE = unix2003
 MAKEFILES := 
 # automatic
 <F = $(notdir $<)
-# environment
- 
-SDKMAN_CANDIDATES_DIR = /Users/martinsimango/.sdkman/candidates
 # makefile (from `Makefile', line 3)
 x86_64_VM_NAME := gdb
+# environment
+PAGER = less
 # environment
 LC_ALL = C
 # makefile (from `Makefile', line 18)
 BOOTLOADER = src/bootloader
 # makefile (from `Makefile', line 12)
 GDB := limactl shell gdb gdb
-# environment
-SECURITYSESSIONID = 186b1
 # automatic
 ^F = $(notdir $^)
 # makefile (from `Makefile', line 11)
@@ -214,9 +200,10 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 710
+VSCODE_PID = 19476
 # variable set hash-table stats:
-# Load=101/1024=10%, Rehash=0, Collisions=16/157=10%
+ 
+# Load=94/1024=9%, Rehash=0, Collisions=16/150=11%
 
 # Pattern-specific Variable Values
 
@@ -424,7 +411,6 @@ obj/sound/melody.o: src/kernel/sound/melody.c
 #  Modification time never checked.
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 48):
- 
 	$(GCC) $(FLAGS) -o $@ -c $< $(INCLUDE_DIRS)
 	
 
@@ -478,6 +464,7 @@ Makefile:
 	
 
 debug: clean build iso
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -686,7 +673,6 @@ run:
 #  Modification time never checked.
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 80):
- 
 	qemu-system-i386 -hda $(IMAGE) -device sb16 -d cpu_reset -monitor stdio -audiodev coreaudio,id=coreaudio,out.frequency=44100,out.channels=2,out.format=s32
 	
 
@@ -698,6 +684,7 @@ obj/memory/heap.o: src/kernel/memory/heap.c
 #  commands to execute (from `Makefile', line 48):
 	$(GCC) $(FLAGS) -o $@ -c $< $(INCLUDE_DIRS)
 	
+ 
 
 # Not a target:
 src/kernel/sound/notes.c:
@@ -912,6 +899,6 @@ obj/math/math.o: src/kernel/math/math.c
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Fri Jul  8 18:17:54 2022
+# Finished Make data base on Thu Aug 11 09:56:21 2022
 
  

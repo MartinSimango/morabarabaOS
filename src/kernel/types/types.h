@@ -23,7 +23,7 @@ typedef uint8 bool;
 #define NULL ((void *)0)
 
 #define KILOBYTE 1024
-#define MEGABYTE (1024 * 1024)
+#define MEGABYTE (KILOBYTE * 1024)
 
 static inline char *itoa(uint32 x, char *s, size_t sz) {
 
