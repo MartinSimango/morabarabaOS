@@ -1,6 +1,6 @@
 #include "font.h"
 
-font font_set_color(font font, RGB color) {
+font font_set_color(font font, RGBA color) {
   font.font_color = color;
   return font;
 }

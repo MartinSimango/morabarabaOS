@@ -22,9 +22,7 @@ EnterProtectiveMode:
     lgdt [gdt] ; load gdt
     
  
-
-
-    ; call EnableA20
+    call EnableA20
     ; call enable_A20
 
     ; call check_a20

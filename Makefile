@@ -79,6 +79,7 @@ iso:
 run:
 	qemu-system-i386 -hda $(IMAGE)  -device sb16 -d cpu_reset -monitor stdio -audiodev coreaudio,id=coreaudio,out.frequency=44100,out.channels=2,out.format=s32
 #  -soundhw pcspk 
+# -device sb16 -audiodev coreaudio,id=coreaudio,out.frequency=48000,out.channels=2,out.format=s32
 
 write-usb: clean build
 	# sudo umount /dev/disk4
@@ -138,9 +139,13 @@ gen-clang-config:
 	clang-format -style=llvm -dump-config > .clang-format.template.yaml
 
 
-disassemble-kernel-bin:
-	$(x86_64_VM_SHELL) objdump -b binary -D -Mintel -mi386 bin/kernel.bin
+disassemble-kernel-iso:
+	$(x86_64_VM_SHELL) objdump -b binary -D -Mintel -mi386 kernel.iso
 
+
+disassemble-boot-bin:
+	$(x86_64_VM_SHELL) objdump -b binary -D -Mintel -mi386 bin/boot.bin
 
 disassemble-kernel-object:	
 	objdump -D $(OBJ)/fullkernel.o
+

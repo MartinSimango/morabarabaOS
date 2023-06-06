@@ -9,7 +9,7 @@
 #include "vbe.h"
 
 typedef struct terminal {
-  RGB background_color;
+  RGBA background_color;
   uint16 terminal_row;
   uint16 terminal_col;
   struct font fnt;
@@ -28,7 +28,7 @@ void terminal_put_char(terminal *t, char c);
 
 void terminal_print(terminal *t, const char *s);
 
-void terminal_set_text_color(terminal *t, RGB text_color);
+void terminal_set_text_color(terminal *t, RGBA text_color);
 
 // uint16 terminal_make_video_mem_char(uint8 c, uint8 text_color);
 

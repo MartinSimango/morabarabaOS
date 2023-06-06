@@ -2,9 +2,9 @@
 #include "io.h"
 #include "types.h"
 
-void screen_init(RGB color) {
+void screen_init(RGBA color) {
 
-  RGB *VGA_MEMORY = (RGB *)VBE_MODE_INFO->PhysBasePtr;
+  RGBA *VGA_MEMORY = (RGBA *)VBE_MODE_INFO->PhysBasePtr;
 
   for (uint16 width = 0; width < SCREEN_WIDTH; width++) {
     for (uint16 height = 0; height < SCREEN_HEIGHT; height++) {
@@ -14,8 +14,8 @@ void screen_init(RGB color) {
   }
 }
 
-void screen_draw_pixel(RGB color, uint16 x, uint16 y) {
-  RGB *VGA_MEMORY = (RGB *)VBE_MODE_INFO->PhysBasePtr;
+void screen_draw_pixel(RGBA color, uint16 x, uint16 y) {
+  RGBA *VGA_MEMORY = (RGBA *)VBE_MODE_INFO->PhysBasePtr;
   VGA_MEMORY[(y * SCREEN_WIDTH) + x] = color;
 }
 
@@ -32,7 +32,7 @@ void screen_draw_char(char c, uint8 char_width, uint16 glyph_index, size_t x,
 
   for (size_t yy = 0; yy < height; yy += 1) {
     for (size_t xx = 0; xx < width; xx += 1) { // * 8 because 8 bits per pixel
-      RGB color = font->font_color;
+      RGBA color = font->font_color;
       uint8 pixel = glyph[(yy * char_width + xx)];
 
       if (pixel > 0) {

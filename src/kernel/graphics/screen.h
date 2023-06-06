@@ -16,15 +16,15 @@
 
 // static const uint8 SCREEN_PALETTE_SIZE = 0;
 
-void screen_init(RGB color);
+void screen_init(RGBA color);
 
 void screen_init_default_pallete();
 
-void screen_init_pallete(RGB *pallete, uint8 pallette_size);
+void screen_init_pallete(RGBA *pallete, uint8 pallette_size);
 
-void screen_pallete_set(uint32 index, struct RGB colour);
+void screen_pallete_set(uint32 index, struct RGBA colour);
 
-void screen_draw_pixel(RGB color, uint16 x, const uint16 y);
+void screen_draw_pixel(RGBA color, uint16 x, const uint16 y);
 
 void screen_draw_char(char c, uint8 char_width, uint16 glyph_index, size_t x,
                       size_t y, const font *font);

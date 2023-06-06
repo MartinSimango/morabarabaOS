@@ -113,12 +113,12 @@ vbe_set_mode:
     ; call print_string
 
  
-	; mov ax, [screen.width]
-	; cmp ax, [mode_info_block.x_resolution]
-	; jne .next_mode
-	; mov ax, [screen.height]
-	; cmp ax, [mode_info_block.y_resolution]
-	; jne .next_mode
+	mov ax, [screen.width]
+	cmp ax, [mode_info_block.x_resolution]
+	jne .next_mode
+	mov ax, [screen.height]
+	cmp ax, [mode_info_block.y_resolution]
+	jne .next_mode
  
 	mov al, [screen.bpp]
 	cmp al, [mode_info_block.bits_per_pixel]

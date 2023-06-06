@@ -40,7 +40,7 @@ void terminal_print(terminal *t, const char *s) {
   }
 }
 
-void terminal_set_text_color(terminal *t, RGB text_color) {
+void terminal_set_text_color(terminal *t, RGBA text_color) {
   t->fnt.font_color = text_color;
 }
 void terminal_init() { terminal_initialize(&Defaultterminal); }

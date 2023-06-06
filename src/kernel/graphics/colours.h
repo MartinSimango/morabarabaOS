@@ -3,25 +3,28 @@
 
 #include "types.h"
 
-typedef struct RGB {
+// 
+typedef struct RGBA {
   uint8 blue;
   uint8 green;
   uint8 red;
-} __attribute__((packed)) RGB;
+  uint8 alpha;
+} __attribute__((packed)) RGBA;
 
-static const RGB WHITE = {0xff, 0xff, 0xff};
-static const RGB BLACK = {0, 0, 0};
-static const RGB RED = {0, 0, 0xff};
-static const RGB GREEN = {0, 0xff, 0};
-static const RGB BLUE = {0xff, 0, 0};
-static const RGB YELLOW = {0, 0xff, 0xff};
-static const RGB PURPLE = {30, 0, 30};
-static const RGB SKY_BLUE = {180, 105, 63};
-static const RGB LIGHT_BLUE = {0, 63, 63};
-static const RGB NAVY_BLUE = {68, 42, 32};
-static const RGB BLUE_SCREEN = {0XBF, 0, 0};
+static const RGBA WHITE = {0xff, 0xff, 0xff,200};
+static const RGBA BLACK = {0,0, 0, 0};
+static const RGBA RED = {0, 0, 0xff,0};
+static const RGBA GREEN = {0, 0xff, 0,0};
+static const RGBA BLUE = {0xff, 0, 0,0};
+static const RGBA YELLOW = {0, 0xff, 0xff,0};
+static const RGBA PURPLE = {30, 0, 30,0};
+static const RGBA SKY_BLUE = {180, 105, 63,0};
+static const RGBA LIGHT_BLUE = {0, 63, 63,0};
+static const RGBA NAVY_BLUE = {68, 42, 32,0};
+static const RGBA BLUE_SCREEN = {0XBF, 0, 0,0};
 
-static const RGB TERMINAL_GRAY = {30, 30, 30};
+
+static const RGBA TERMINAL_GRAY = {20,20, 20, 100};
 
 void init_colours();
 
