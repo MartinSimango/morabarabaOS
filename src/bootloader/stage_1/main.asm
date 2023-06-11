@@ -4,8 +4,6 @@
 
 PROGRAM_SPACE equ 0x7e00; 512 bytes after first sector
 
-
-
 main:
  ; 2 lines are necessary for bios parameter block to be at 0x3
     JMP short _start_2 
@@ -36,7 +34,7 @@ boot_sector:
         acFSType        db  "FAT16   "      ; file system type [8 bytes]
 
 _start_2: 
-    jmp 0:start
+    jmp 0:start ; change code segment
 ; define real mode data segments
 start:
     cli                  ; Turn off interrupts
@@ -45,7 +43,7 @@ start:
     mov  ds, ax          ; DS = CS = 0x0
     mov  es, ax          ; ES = CS = 0x0
     mov  ss, ax          ; SS = CS = 0x0 
-    ; mov bp, 0x7c00      ;  Stack grows down from offset 0x7C00 toward 0x0000. decimal=  31744
+    mov bp, 0x7c00      ;  Stack grows down from offset 0x7C00 toward 0x0000. decimal=  31744
     mov sp, 0x7c00 
     sti                  ; Enable interrupts
     mov si, LoadingMessage
@@ -58,8 +56,16 @@ reset_drive:
   int  0x13               ; call interrupt 13h
   jc   boot_failure        ; display error message if carry set (error)
   call read_disk
+  call print_protected_mode_message
+  call clear_screen
+ 
+  cli
+    
+  lgdt [gdt] ; load gdt
+  call enable_A20
+  call enable_PE
   
-  jmp PROGRAM_SPACE     ; jmp to 2nd stage bootloader that will load the kernel
+  jmp load_stage_2
 
 
 
@@ -78,13 +84,44 @@ reboot:
     dw 0x0000
     dw 0xFFFF 
 
+load_stage_2:
+    mov    ax, DATA_SEG      ; Byte offset for selector 2 (start of data seg)
+    mov    ds, ax        ; (remember, each descriptor is 8 bytes)
+    mov    es, ax
+    mov    fs, ax
+    mov    gs, ax
+    mov    ss, ax
+    mov    esp, 0x200000  
+    mov    ebp, esp
+    jmp CODE_SEG:PROGRAM_SPACE     ; jmp to 2nd stage bootloader that will load the kernel (rust-code)
+
+enable_A20:
+    in al, 0x92
+    or al, 2
+    out 0x92, al
+    ret
+
+; enable protective mode bit
+enable_PE:
+    mov eax, cr0 
+    or  eax, 1
+    mov cr0, eax
+    ret
+
+
+print_protected_mode_message:
+    mov si, ProtectiveModeMessage
+    call print_string
+    ret
+
 %include "src/bootloader/util/print.asm"
 %include "src/bootloader/util/diskread.asm"
+%include "src/bootloader/stage_1/gdt.asm"
 
 RebootMsg db "Press any key to reboot",0x0d,0xA,0
 DiskError db "Disk error ", 0
 LoadingMessage db "Loading...",0x0d,0xA,0
-
+ProtectiveModeMessage db "Entering protective mode...", 0x0d,0xA,0
 
 
 TIMES 510 - ($ - $$) db 0 ; fill all bytes until the 510th byte with zeros

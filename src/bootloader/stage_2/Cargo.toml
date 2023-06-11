@@ -1,0 +1,10 @@
+[package]
+name = "MSBL"
+version = "0.1.0"
+authors = ["Martin Simango <shukomango@gmail.com>"]
+
+[lib]
+crate-type = ["staticlib"]
+
+[dependencies]
+rlibc = "1.0"
